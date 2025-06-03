@@ -1,0 +1,16 @@
+{
+  "name": "stripdown",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "biome check"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0-beta.6",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "~5.8.3"
+  }
+}
