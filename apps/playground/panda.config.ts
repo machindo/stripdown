@@ -1,8 +1,15 @@
 import { defineConfig } from '@pandacss/dev'
+import { createPreset } from '@park-ui/panda-preset'
+import blue from '@park-ui/panda-preset/colors/blue'
+import neutral from '@park-ui/panda-preset/colors/neutral'
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
+
+  presets: [
+    createPreset({ accentColor: neutral, grayColor: neutral, radius: 'sm' }),
+  ],
 
   // Where to look for your css declarations
   include: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -14,7 +21,20 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      tokens: {
+        colors: {
+          [blue.name]: blue.tokens,
+        },
+      },
+      semanticTokens: {
+        colors: {
+          'gutter.bg': { value: '{colors.bg.muted}' },
+          'selection.bg': { value: '{colors.blue.light.5}' },
+          'selection.bg.muted': { value: '{colors.blue.light.5/50}' },
+        },
+      },
+    },
   },
 
   // The output directory for your css system

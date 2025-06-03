@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "apps/playground"
+		},
+		{
+			"path": "packages/codemirror"
+		},
+		{
+			"path": "packages/stripdown-spec"
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"Stripdown"
+		]
+	}
+}
