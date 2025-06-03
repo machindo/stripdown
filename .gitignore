@@ -36,3 +36,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # moon
 .moon/cache
 .moon/docker
+
+## Panda
+styled-system
+styled-system-studio

@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["*", "**", "!**/cache/**/*"]
+    "includes": ["*", "**", "!**/{cache,styled-system}/**/*"]
   },
   "formatter": {
     "enabled": true,
