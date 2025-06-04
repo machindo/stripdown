@@ -1,27 +1,16 @@
-import {
-  type EditorView,
-  layer,
-  type PluginValue,
-  RectangleMarker,
-  ViewPlugin,
-} from '@codemirror/view'
+import { type EditorView, layer, RectangleMarker } from '@codemirror/view'
 
-import { isPageHeading, stripdownTree } from './parse'
+import { inRanges, isPageHeading, type StripdownTree } from './parse'
+import { stripdownTree } from './stripdownTree'
 
 const pageGutter = 8
 
-const getPageHeadingPositions = (view: EditorView) =>
-  stripdownTree(view.state)
-    .children.filter(isPageHeading)
-    .map((node) => node.node.from)
-    .filter((pos) =>
-      view.visibleRanges.some((range) => pos >= range.from && pos <= range.to),
-    )
-
-const buildMarkers = (view: EditorView, pageHeadingPositions: number[]) => {
+const buildMarkers = (view: EditorView, tree: StripdownTree) => {
   const parentDomRect = view.dom.getBoundingClientRect()
   const domRect = view.contentDOM.getBoundingClientRect()
-  const headerCoords = pageHeadingPositions
+  const headerCoords = inRanges(tree, view.visibleRanges)
+    .filter(isPageHeading)
+    .map((node) => node.node.from)
     .map((pos) => view.coordsAtPos(pos))
     .filter(Boolean)
   const topOffset = view.documentPadding.top - view.documentTop
@@ -54,29 +43,15 @@ const buildMarkers = (view: EditorView, pageHeadingPositions: number[]) => {
 }
 
 export const pageBackgroundLayer = () => {
-  const pageHeadingPositions = ViewPlugin.define((view) => {
-    const value = {
-      pageHeadingPositions: getPageHeadingPositions(view),
-      update: (update) => {
-        if (update.docChanged || update.viewportChanged) {
-          value.pageHeadingPositions = getPageHeadingPositions(update.view)
-        }
-      },
-    } satisfies PluginValue & { pageHeadingPositions: number[] }
-
-    return value
-  })
-
   return [
-    pageHeadingPositions,
     layer({
       above: false,
       update: () => false,
-      markers: (view) =>
-        buildMarkers(
-          view,
-          view.plugin(pageHeadingPositions)?.pageHeadingPositions ?? [],
-        ),
+      markers: (view) => {
+        const tree = view.plugin(stripdownTree)?.tree
+
+        return tree ? buildMarkers(view, tree) : []
+      },
     }),
   ]
 }

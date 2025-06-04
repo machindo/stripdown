@@ -67,4 +67,9 @@ export const baseTheme = EditorView.theme({
     borderRadius: token('radii.xs'),
     boxShadow: '0 1px 1px #00000011, 0 2px 2px #00000011, 0 4px 4px #00000011',
   },
+  '.cm-wordCountGutter-marker': {
+    textAlign: 'right',
+    verticalAlign: 'middle',
+    color: token('colors.fg.subtle'),
+  },
 })

@@ -20,6 +20,7 @@ import {
   pageBackgroundLayer,
   stripdownLanguageSupport,
   stripdownTree,
+  wordCountGutter,
 } from '@stripdown/codemirror'
 import { styled } from 'styled-system/jsx'
 
@@ -41,6 +42,7 @@ export const Editor = styled((props: { className?: string }) => {
         baseTheme,
         scrollPastEnd(),
         pageBackgroundLayer(),
+        wordCountGutter(),
         // Input handling
         dropCursor(),
         keymap.of([
@@ -52,18 +54,9 @@ export const Editor = styled((props: { className?: string }) => {
           ...lintKeymap,
         ]),
         // Language
+        stripdownTree,
         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         stripdownLanguageSupport,
-        // Debug
-        EditorView.updateListener.of((update) => {
-          if (!update.docChanged) return
-
-          console.time('parse')
-
-          stripdownTree(update.view.state)
-
-          console.timeEnd('parse')
-        }),
       ],
     }),
   })

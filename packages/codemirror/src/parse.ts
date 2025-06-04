@@ -223,7 +223,7 @@ export const getWordCount = (node: StripdownNode) => {
 
 const treeCache = new WeakMap<EditorState, StripdownTree>()
 
-export const stripdownTree = (state: EditorState): StripdownTree => {
+export const parseStripdownTree = (state: EditorState): StripdownTree => {
   const cachedTree = treeCache.get(state)
 
   if (cachedTree) return cachedTree
@@ -235,3 +235,15 @@ export const stripdownTree = (state: EditorState): StripdownTree => {
 
   return tree
 }
+
+export const inRanges = (
+  tree: StripdownTree,
+  ranges: readonly { from: number; to: number }[],
+) =>
+  tree.children.filter(
+    (node) =>
+      node.type !== 'Top' &&
+      ranges.some(
+        (range) => range.from <= node.node.from && range.to >= node.node.to,
+      ),
+  )

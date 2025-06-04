@@ -1,3 +1,5 @@
 export * from './pageBackgroundLayer'
 export * from './parse'
 export * from './stripdownLanguageSupport'
+export * from './stripdownTree'
+export * from './wordCountGutter'
