@@ -4,25 +4,27 @@ import count from 'word-count'
 type NumberedHeadingProps = {
   isNumbered: true
   isStatic: boolean
-  isValid: boolean
+  after: string
+  before: string
   columnEnd: number
   columnStart: number
   delimiter: string
   dir: string
   end: number | undefined
   extra: number
-  expectedStart: number
-  expectedEnd: number
   implicitEnd: number
-  level: number
   span: number
   start: number
+}
+
+export type ExpectedNumberedHeadingProps = {
+  start: number
+  end: number
 }
 
 type UnnumberedHeadingProps = {
   isNumbered: false
   isValid: true
-  level: number
 }
 
 export type HeadingProps = UnnumberedHeadingProps | NumberedHeadingProps
@@ -33,20 +35,6 @@ export type SpeakerProps = {
 
 export type DialogueProps = {
   wordCount: number
-}
-
-/**
- * The level of each node type, or false if the node should be skipped
- */
-export const headingLevels: Readonly<Record<string, number>> = {
-  ATXHeading1: 1,
-  ATXHeading2: 2,
-  ATXHeading3: 3,
-  ATXHeading4: 4,
-  ATXHeading5: 5,
-  ATXHeading6: 6,
-  SetextHeading1: 1,
-  SetextHeading2: 2,
 }
 
 export const nodeTypes = {
@@ -77,19 +65,10 @@ export const speakerPattern = /^[^:]+:\s*$/
 
 export const parentheticalPattern = /^\s*\(.*\)\s*$/
 
-export const parseNumberedHeading = (
-  string: string,
-  {
-    level,
-    expectedStart,
-  }: {
-    level: number
-    expectedStart: number
-  },
-): UnnumberedHeadingProps | NumberedHeadingProps => {
+export const parseNumberedHeading = (string: string): HeadingProps => {
   const matches = numberPattern.exec(string)
 
-  if (!matches) return { isNumbered: false, isValid: true, level }
+  if (!matches) return { isNumbered: false, isValid: true }
 
   const { groups, index } = matches
   const {
@@ -111,24 +90,39 @@ export const parseNumberedHeading = (
     rightNumber === undefined || leftNumber <= rightNumber ? 'ltr' : 'rtl'
   const extra = (end ?? start) - start
   const isStatic = left[0] === '0' || right[0] === '0'
-  const isValid = isStatic || start === expectedStart
+  const columnStart = index
+  const columnEnd = columnStart + left.length + delimiter.length + right.length
+  const before = string.substring(0, columnStart)
+  const after = string.substring(columnEnd)
 
   return {
     isNumbered: true,
     isStatic,
-    isValid,
-    columnEnd: index + left.length + delimiter.length + right.length,
-    columnStart: index,
+    after,
+    before,
+    columnEnd,
+    columnStart,
     delimiter,
     dir,
     end,
     extra,
-    expectedStart,
-    expectedEnd: expectedStart + extra,
     implicitEnd: end ?? start,
-    level,
     span: extra + 1,
     start,
+  }
+}
+
+export const validateNumberedHeadingProps = (
+  props: HeadingProps,
+  expectedStart: number,
+): ExpectedNumberedHeadingProps | undefined => {
+  if (!props.isNumbered) return undefined
+  if (props.isStatic) return undefined
+  if (props.start === expectedStart) return undefined
+
+  return {
+    start: expectedStart,
+    end: expectedStart + props.extra,
   }
 }
 

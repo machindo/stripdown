@@ -1,104 +1,224 @@
 import { syntaxTree } from '@codemirror/language'
 import type { EditorState } from '@codemirror/state'
+import type { SyntaxNode } from '@lezer/common'
 
+import { headingLevelProp } from './markdownConfig'
 import {
   type DialogueProps,
+  type ExpectedNumberedHeadingProps,
   type HeadingProps,
-  headingLevels,
   nodeTypes,
   parseDialogue,
   parseNumberedHeading,
   parseSpeaker,
   type SpeakerProps,
+  validateNumberedHeadingProps,
 } from './nodes'
 
-type StripdownNode =
+type Context = {
+  headingNodes: StripdownNode[]
+  headingNumbers: number[]
+  speaker: StripdownNode | undefined
+  top: { type: 'Top' }
+  wordCount: number
+}
+
+export type StripdownNode =
+  | {
+      type: 'Top'
+    }
   | {
       type: 'Heading'
-      text: string
-      from: number
-      to: number
+      node: SyntaxNode
+      scope: StripdownNode[]
+      expectedProps: ExpectedNumberedHeadingProps | undefined
       props: HeadingProps
+      text: string
     }
   | {
       type: 'Speaker'
+      node: SyntaxNode
+      scope: StripdownNode[]
       text: string
-      from: number
-      to: number
       props: SpeakerProps
     }
   | {
       type: 'Dialogue'
+      node: SyntaxNode
+      scope: StripdownNode[]
       text: string
-      from: number
-      to: number
       props: DialogueProps
     }
 
-const createContext = () => ({
-  headingNumberState: Array.from({ length: 6 }, () => 0),
+type StripdownNodeResult =
+  | {
+      value: StripdownNode
+      context: Context
+    }
+  | undefined
+
+export type StripdownTree = {
+  children: StripdownNode[]
+}
+
+const createContext = (): Context => ({
+  headingNodes: [],
+  headingNumbers: [],
+  speaker: undefined,
+  top: { type: 'Top' },
+  wordCount: 0,
 })
+
+const wordCounts = new WeakMap<StripdownNode, number>()
+
+const createHeadingNode = ({
+  state,
+  node,
+  context,
+}: {
+  state: EditorState
+  node: SyntaxNode
+  context: Context
+}): StripdownNodeResult => {
+  const level = node.type.prop(headingLevelProp)
+
+  if (!level) return undefined
+
+  const text = state.sliceDoc(node.from, node.to)
+  const expectedStart = (context.headingNumbers[level - 1] ?? 0) + 1
+  const props = parseNumberedHeading(text)
+  const expectedProps = validateNumberedHeadingProps(props, expectedStart)
+  const scope = context.headingNodes.slice(0, level - 1)
+  const value = {
+    type: 'Heading',
+    node,
+    scope,
+    text,
+    props,
+    expectedProps,
+  } satisfies StripdownNode
+
+  return {
+    value,
+    context: {
+      ...context,
+      headingNodes: [...scope, value],
+      headingNumbers: [
+        ...context.headingNumbers.slice(0, level - 1),
+        props.isNumbered
+          ? (expectedProps?.end ?? props.implicitEnd)
+          : (context.headingNumbers[level - 1] ?? 0),
+      ],
+      speaker: undefined,
+      wordCount: context.wordCount,
+    },
+  }
+}
+
+const createSpeakerNode = ({
+  state,
+  node,
+  context,
+}: {
+  state: EditorState
+  node: SyntaxNode
+  context: Context
+}): StripdownNodeResult => {
+  if (node.name !== nodeTypes.speaker.name) return undefined
+
+  const text = state.sliceDoc(node.from, node.to)
+  const value = {
+    type: 'Speaker',
+    node,
+    scope: context.headingNodes,
+    text,
+    props: parseSpeaker(text),
+  } satisfies StripdownNode
+
+  return {
+    value,
+    context: {
+      ...context,
+      speaker: value,
+    },
+  }
+}
+
+const createDialogueNode = ({
+  state,
+  node,
+  context,
+}: {
+  state: EditorState
+  node: SyntaxNode
+  context: Context
+}): StripdownNodeResult => {
+  if (node.name !== nodeTypes.dialogue.name) return undefined
+
+  const text = state.sliceDoc(node.from, node.to)
+  const props = parseDialogue(text)
+  const value = {
+    type: 'Dialogue',
+    node: node.node,
+    scope: [...context.headingNodes, context.speaker].filter(Boolean),
+    text,
+    props,
+  } satisfies StripdownNode
+
+  wordCounts.set(value, props.wordCount)
+  wordCounts.set(context.top, context.wordCount + props.wordCount)
+  value.scope.forEach((node) => {
+    wordCounts.set(node, (wordCounts.get(node) ?? 0) + props.wordCount)
+  })
+
+  return {
+    value,
+    context: {
+      ...context,
+      speaker: undefined,
+      wordCount: context.wordCount + props.wordCount,
+    },
+  }
+}
 
 export const parse = function* (
   state: EditorState,
-  from = 0,
 ): Generator<StripdownNode, void, unknown> {
-  const context = createContext()
   const tree = syntaxTree(state)
-  const cursor = tree.cursorAt(from)
+  const cursor = tree.cursor()
+  let context = createContext()
 
-  while (cursor.next(cursor.node.type.isTop || cursor.node.type.is('Block'))) {
-    const level = headingLevels[cursor.name]
+  yield context.top
 
-    if (level) {
-      const text = state.sliceDoc(cursor.from, cursor.to)
-      const expectedStart = (context.headingNumberState[level - 1] ?? 0) + 1
-      const props = parseNumberedHeading(text, { level, expectedStart })
+  while (cursor.next(cursor.type.isTop)) {
+    const result =
+      createHeadingNode({ state, node: cursor.node, context }) ??
+      createSpeakerNode({ state, node: cursor.node, context }) ??
+      createDialogueNode({ state, node: cursor.node, context })
 
-      context.headingNumberState.fill(0, level)
+    if (result) {
+      context = result.context
 
-      if (props.isNumbered) {
-        context.headingNumberState[level - 1] = props.isValid
-          ? props.start + props.extra
-          : expectedStart + props.extra
-      }
-
-      yield {
-        type: 'Heading',
-        text,
-        from: cursor.from,
-        to: cursor.to,
-        props,
-      }
-
-      continue
-    }
-
-    switch (cursor.name) {
-      case nodeTypes.speaker.name: {
-        const text = state.sliceDoc(cursor.from, cursor.to)
-
-        yield {
-          type: 'Speaker',
-          text,
-          from: cursor.from,
-          to: cursor.to,
-          props: parseSpeaker(text),
-        }
-
-        break
-      }
-      case nodeTypes.dialogue.name: {
-        const text = state.sliceDoc(cursor.from, cursor.to)
-
-        yield {
-          type: 'Dialogue',
-          text,
-          from: cursor.from,
-          to: cursor.to,
-          props: parseDialogue(text),
-        }
-      }
+      yield result.value
     }
   }
+}
+
+export const getWordCount = (node: StripdownNode) => {
+  return wordCounts.get(node) ?? 0
+}
+
+const treeCache = new WeakMap<EditorState, StripdownTree>()
+
+export const stripdownTree = (state: EditorState): StripdownTree => {
+  const cachedTree = treeCache.get(state)
+
+  if (cachedTree) return cachedTree
+
+  const children = parse(state).toArray()
+  const tree = { children }
+
+  treeCache.set(state, tree)
+
+  return tree
 }

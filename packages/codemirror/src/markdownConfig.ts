@@ -66,7 +66,6 @@ export const markdownConfig: MarkdownConfig = {
       ATXHeading6: 6,
       SetextHeading1: 1,
       SetextHeading2: 2,
-      [nodeTypes.speaker.name]: 4,
     }),
   ],
 } as const

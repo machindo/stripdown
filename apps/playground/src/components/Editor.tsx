@@ -16,7 +16,7 @@ import {
   keymap,
   scrollPastEnd,
 } from '@codemirror/view'
-import { parse, stripdownLanguageSupport } from '@stripdown/codemirror'
+import { stripdownLanguageSupport, stripdownTree } from '@stripdown/codemirror'
 import { styled } from 'styled-system/jsx'
 
 import { baseTheme } from './baseTheme'
@@ -55,42 +55,9 @@ export const Editor = styled((props: { className?: string }) => {
 
           console.time('parse')
 
-          let validCount = 0
-          let headingCount = 0
-          let invalidCount = 0
-          let speakerCount = 0
-          let dialogueCount = 0
-          let wordCount = 0
-
-          for (const node of parse(update.view.state)) {
-            switch (node.type) {
-              case 'Heading':
-                headingCount++
-                if (node.props.isValid) {
-                  validCount++
-                } else {
-                  invalidCount++
-                }
-                break
-              case 'Speaker':
-                speakerCount++
-                break
-              case 'Dialogue':
-                dialogueCount++
-                wordCount += node.props.wordCount
-                break
-            }
-          }
+          stripdownTree(update.view.state)
 
           console.timeEnd('parse')
-          console.log({
-            headingCount,
-            validCount,
-            invalidCount,
-            speakerCount,
-            dialogueCount,
-            wordCount,
-          })
         }),
       ],
     }),
