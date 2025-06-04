@@ -16,7 +16,11 @@ import {
   keymap,
   scrollPastEnd,
 } from '@codemirror/view'
-import { stripdownLanguageSupport, stripdownTree } from '@stripdown/codemirror'
+import {
+  pageBackgroundLayer,
+  stripdownLanguageSupport,
+  stripdownTree,
+} from '@stripdown/codemirror'
 import { styled } from 'styled-system/jsx'
 
 import { baseTheme } from './baseTheme'
@@ -36,6 +40,7 @@ export const Editor = styled((props: { className?: string }) => {
         EditorView.lineWrapping,
         baseTheme,
         scrollPastEnd(),
+        pageBackgroundLayer(),
         // Input handling
         dropCursor(),
         keymap.of([

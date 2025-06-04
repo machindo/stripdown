@@ -52,9 +52,6 @@ export const baseTheme = EditorView.theme({
   '.cm-line': {
     paddingInline: '3ch',
   },
-  '.cm-line:has(.superscript-dialogue)': {
-    paddingInline: '7ch',
-  },
   '& ::selection': {
     background: 'none',
   },
@@ -64,5 +61,10 @@ export const baseTheme = EditorView.theme({
   },
   '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
     backgroundColor: token('colors.selection.bg'),
+  },
+  '.cm-page-background': {
+    backgroundColor: token('colors.bg.default'),
+    borderRadius: token('radii.xs'),
+    boxShadow: '0 1px 1px #00000011, 0 2px 2px #00000011, 0 4px 4px #00000011',
   },
 })

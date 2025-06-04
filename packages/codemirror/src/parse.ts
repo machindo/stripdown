@@ -23,32 +23,40 @@ type Context = {
   wordCount: number
 }
 
+export type StripdownTopNode = {
+  type: 'Top'
+}
+
+export type StripdownHeadingNode = {
+  type: 'Heading'
+  node: SyntaxNode
+  scope: StripdownNode[]
+  expectedProps: ExpectedNumberedHeadingProps | undefined
+  props: HeadingProps
+  text: string
+}
+
+export type StripdownSpeakerNode = {
+  type: 'Speaker'
+  node: SyntaxNode
+  scope: StripdownNode[]
+  text: string
+  props: SpeakerProps
+}
+
+export type StripdownDialogueNode = {
+  type: 'Dialogue'
+  node: SyntaxNode
+  scope: StripdownNode[]
+  text: string
+  props: DialogueProps
+}
+
 export type StripdownNode =
-  | {
-      type: 'Top'
-    }
-  | {
-      type: 'Heading'
-      node: SyntaxNode
-      scope: StripdownNode[]
-      expectedProps: ExpectedNumberedHeadingProps | undefined
-      props: HeadingProps
-      text: string
-    }
-  | {
-      type: 'Speaker'
-      node: SyntaxNode
-      scope: StripdownNode[]
-      text: string
-      props: SpeakerProps
-    }
-  | {
-      type: 'Dialogue'
-      node: SyntaxNode
-      scope: StripdownNode[]
-      text: string
-      props: DialogueProps
-    }
+  | StripdownTopNode
+  | StripdownHeadingNode
+  | StripdownSpeakerNode
+  | StripdownDialogueNode
 
 type StripdownNodeResult =
   | {
@@ -60,6 +68,11 @@ type StripdownNodeResult =
 export type StripdownTree = {
   children: StripdownNode[]
 }
+
+export const isPageHeading = (
+  node: StripdownNode,
+): node is StripdownHeadingNode =>
+  node.type === 'Heading' && node.node.type.prop(headingLevelProp) === 2
 
 const createContext = (): Context => ({
   headingNodes: [],
