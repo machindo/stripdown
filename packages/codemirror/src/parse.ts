@@ -74,6 +74,20 @@ export const isPageHeading = (
 ): node is StripdownHeadingNode =>
   node.type === 'Heading' && node.node.type.prop(headingLevelProp) === 2
 
+export const isNumberedPageHeading = (
+  node: StripdownNode,
+): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
+  node.type === 'Heading' &&
+  node.node.type.prop(headingLevelProp) === 2 &&
+  node.props.isNumbered
+
+export const isNumberedPanelHeading = (
+  node: StripdownNode,
+): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
+  node.type === 'Heading' &&
+  node.node.type.prop(headingLevelProp) === 3 &&
+  node.props.isNumbered
+
 const createContext = (): Context => ({
   headingNodes: [],
   headingNumbers: [],

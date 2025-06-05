@@ -9,7 +9,8 @@
     "@types/bun": "latest",
     "@types/js-yaml": "^4.0.9",
     "arktype": "^2.1.20",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "lucide": "^0.513.0"
   },
   "peerDependencies": {
     "@codemirror/autocomplete": "^6.18.6",

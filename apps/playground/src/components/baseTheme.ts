@@ -62,14 +62,54 @@ export const baseTheme = EditorView.theme({
   '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
     backgroundColor: token('colors.selection.bg'),
   },
+  // pageBackgroundLayer
   '.cm-page-background': {
     backgroundColor: token('colors.bg.default'),
     borderRadius: token('radii.xs'),
     boxShadow: '0 1px 1px #00000011, 0 2px 2px #00000011, 0 4px 4px #00000011',
   },
+  // wordCountGutter
   '.cm-wordCountGutter-marker': {
     textAlign: 'right',
     verticalAlign: 'middle',
+    color: token('colors.fg.subtle'),
+  },
+  // pageIconDecorations
+  '.cm-pageIconWidget-container': {
+    position: 'absolute',
+    insetInlineEnd: '2ch',
+    pointerEvents: 'none',
+  },
+  '.cm-pageIconWidget-row': {
+    display: 'flex',
+    placeContent: 'center',
+  },
+  '.cm-pageIconWidget-icon': {
+    stroke: token('colors.fg.default'),
+  },
+  '.cm-pageIconWidget-icon_left > [key=left]': {
+    fill: token('colors.fg.subtle'),
+  },
+  '.cm-pageIconWidget-icon_left > [key=right]': {
+    stroke: token('colors.fg.subtle'),
+    strokeDasharray: '1 3',
+  },
+  '.cm-pageIconWidget-icon_right > [key=left]': {
+    stroke: token('colors.fg.subtle'),
+    strokeDasharray: '1 3',
+  },
+  '.cm-pageIconWidget-icon_right > [key=right]': {
+    fill: token('colors.fg.subtle'),
+  },
+  '.cm-pageIconWidget-icon_both > [key=left]': {
+    fill: token('colors.fg.subtle'),
+  },
+  '.cm-pageIconWidget-icon_both > [key=right]': {
+    fill: token('colors.fg.subtle'),
+  },
+  // pageSummaryDecorations
+  '.cm-pageSummaryWidget': {
+    fontStyle: 'italic',
     color: token('colors.fg.subtle'),
   },
 })

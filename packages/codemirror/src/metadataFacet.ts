@@ -20,6 +20,14 @@ const isSuccessResult = <T>(
   result: StandardSchemaV1.Result<T> | Promise<StandardSchemaV1.Result<T>>,
 ): result is StandardSchemaV1.SuccessResult<T> => 'value' in result
 
+export const parseOptional =
+  <T>(schema: StandardSchemaV1<unknown, T>) =>
+  (data: unknown) => {
+    const result = schema['~standard'].validate(data)
+
+    return isSuccessResult(result) ? result.value : undefined
+  }
+
 export const frontmatterAs =
   <T>(schema: StandardSchemaV1<unknown, T>) =>
   (state: EditorState) => {
@@ -29,9 +37,8 @@ export const frontmatterAs =
 
     try {
       const data = yaml.load(frontmatter)
-      const result = schema['~standard'].validate(data)
 
-      return isSuccessResult(result) ? result.value : undefined
+      return parseOptional(schema)(data)
     } catch {
       return undefined
     }

@@ -64,9 +64,7 @@ export const wordCountGutter = (): Extension => {
       markers: buildMarkers(view),
       update: (update) => {
         if (update.docChanged || update.viewportChanged) {
-          console.time('buildMarkers')
           value.markers = buildMarkers(update.view)
-          console.timeEnd('buildMarkers')
         }
       },
     } satisfies PluginValue & { markers: RangeSet<GutterMarker> }

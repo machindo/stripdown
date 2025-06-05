@@ -19,6 +19,8 @@ import {
 import {
   frontmatterAsStripdownConfig,
   pageBackgroundLayer,
+  pageIconDecorations,
+  pageSummaryDecorations,
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
@@ -44,6 +46,8 @@ export const Editor = styled((props: { className?: string }) => {
         baseTheme,
         scrollPastEnd(),
         pageBackgroundLayer(),
+        pageIconDecorations,
+        pageSummaryDecorations,
         wordCountGutter(),
         // Input handling
         dropCursor(),
