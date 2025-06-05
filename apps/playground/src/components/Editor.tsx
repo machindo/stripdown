@@ -17,6 +17,7 @@ import {
   scrollPastEnd,
 } from '@codemirror/view'
 import {
+  frontmatterAsStripdownConfig,
   pageBackgroundLayer,
   stripdownLanguageSupport,
   stripdownTree,
@@ -60,6 +61,7 @@ export const Editor = styled((props: { className?: string }) => {
           localStorage.setItem('doc', update.view.state.doc.toString())
         }),
         // Language
+        frontmatterAsStripdownConfig(),
         stripdownTree,
         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         stripdownLanguageSupport,

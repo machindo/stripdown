@@ -5,7 +5,11 @@
   "module": "src/index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@standard-schema/spec": "^1.0.0",
+    "@types/bun": "latest",
+    "@types/js-yaml": "^4.0.9",
+    "arktype": "^2.1.20",
+    "js-yaml": "^4.1.0"
   },
   "peerDependencies": {
     "@codemirror/autocomplete": "^6.18.6",
