@@ -2,6 +2,7 @@ import { autocompletion, completionKeymap } from '@codemirror/autocomplete'
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands'
 import {
   defaultHighlightStyle,
+  foldGutter,
   foldKeymap,
   syntaxHighlighting,
 } from '@codemirror/language'
@@ -27,6 +28,7 @@ import {
   pageIconDecorations,
   pageSummaryDecorations,
   speakerAutocompletion,
+  stripdownFoldService,
   stripdownHighlightStyle,
   stripdownLanguageSupport,
   stripdownTree,
@@ -54,15 +56,16 @@ export const Editor = styled((props: { className?: string }) => {
           ],
         }),
         // Presentation
-        highlightSpecialChars(),
-        drawSelection(),
-        highlightSelectionMatches(),
-        EditorView.lineWrapping,
         baseTheme,
-        scrollPastEnd(),
+        drawSelection(),
+        EditorView.lineWrapping,
+        foldGutter(),
+        highlightSelectionMatches(),
+        highlightSpecialChars(),
         pageBackgroundLayer(),
         pageIconDecorations,
         pageSummaryDecorations,
+        scrollPastEnd(),
         wordCountGutter(),
         // Input handling
         characterListFacet.compute(['doc'], charactersFromMetadata),
@@ -83,10 +86,11 @@ export const Editor = styled((props: { className?: string }) => {
         }),
         // Language
         frontmatterAsStripdownConfig(),
+        stripdownFoldService,
+        stripdownLanguageSupport,
         stripdownTree,
         syntaxHighlighting(defaultHighlightStyle),
         syntaxHighlighting(stripdownHighlightStyle),
-        stripdownLanguageSupport,
       ],
     }),
   })
