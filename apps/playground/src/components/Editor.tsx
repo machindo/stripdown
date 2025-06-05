@@ -27,6 +27,7 @@ import {
   pageIconDecorations,
   pageSummaryDecorations,
   speakerAutocompletion,
+  stripdownHighlightStyle,
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
@@ -83,7 +84,8 @@ export const Editor = styled((props: { className?: string }) => {
         // Language
         frontmatterAsStripdownConfig(),
         stripdownTree,
-        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+        syntaxHighlighting(defaultHighlightStyle),
+        syntaxHighlighting(stripdownHighlightStyle),
         stripdownLanguageSupport,
       ],
     }),

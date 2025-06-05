@@ -1,5 +1,6 @@
-import { tags } from '@lezer/highlight'
 import count from 'word-count'
+
+import { stripdownTags } from './stripdownHighlightStyle'
 
 type NumberedHeadingProps = {
   isNumbered: true
@@ -41,17 +42,17 @@ export const nodeTypes = {
   speaker: {
     name: 'Speaker',
     block: true,
-    style: [tags.heading4],
+    style: [stripdownTags.speaker],
   },
   dialogue: {
     name: 'Dialogue',
     block: true,
-    style: [tags.content],
+    style: [stripdownTags.dialogue],
   },
   parenthetical: {
     name: 'Parenthetical',
     block: true,
-    style: [tags.content],
+    style: [stripdownTags.parenthetical],
   },
 } as const
 

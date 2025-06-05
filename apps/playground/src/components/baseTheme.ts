@@ -62,6 +62,16 @@ export const baseTheme = EditorView.theme({
   '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
     backgroundColor: token('colors.selection.bg'),
   },
+  // stripdownHighlightStyle
+  '.cm-stripdown-speaker': {
+    fontWeight: token('fontWeights.semibold'),
+  },
+  '.cm-line:has(.cm-stripdown-dialogue)': {
+    paddingInline: '7ch',
+  },
+  '.cm-stripdown-parenthetical': {
+    fontStyle: 'italic',
+  },
   // pageBackgroundLayer
   '.cm-page-background': {
     backgroundColor: token('colors.bg.default'),
