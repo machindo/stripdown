@@ -25,6 +25,7 @@ import {
   frontmatterAsStripdownConfig,
   headingAutocompletionEN_US,
   headingFoldService,
+  headingLinter,
   highlightStyle,
   pageBackgroundLayer,
   pageIconDecorations,
@@ -87,6 +88,7 @@ export const Editor = styled((props: { className?: string }) => {
         // Language
         frontmatterAsStripdownConfig(),
         headingFoldService,
+        headingLinter,
         stripdownLanguageSupport,
         stripdownTree,
         syntaxHighlighting(defaultHighlightStyle),
