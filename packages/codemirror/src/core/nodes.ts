@@ -1,6 +1,6 @@
 import count from 'word-count'
 
-import { stripdownTags } from './stripdownHighlightStyle'
+import { stripdownTags } from './highlightStyle'
 
 type NumberedHeadingProps = {
   isNumbered: true

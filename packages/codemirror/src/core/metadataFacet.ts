@@ -4,6 +4,8 @@ import { Facet } from '@codemirror/state'
 import type { StandardSchemaV1 } from '@standard-schema/spec'
 import yaml from 'js-yaml'
 
+import { StripdownConfig } from './StripdownConfig'
+
 export const metadataFacet = Facet.define<unknown, unknown>({
   combine: (values) => values[values.length - 1],
 })
@@ -28,7 +30,7 @@ export const parseOptional =
     return isSuccessResult(result) ? result.value : undefined
   }
 
-export const frontmatterAs =
+const frontmatterAs =
   <T>(schema: StandardSchemaV1<unknown, T>) =>
   (state: EditorState) => {
     const frontmatter = sliceFrontmatter(state)
@@ -43,3 +45,6 @@ export const frontmatterAs =
       return undefined
     }
   }
+
+export const frontmatterAsStripdownConfig = () =>
+  metadataFacet.compute(['doc'], frontmatterAs(StripdownConfig))

@@ -17,12 +17,12 @@ import {
   type SVGProps,
 } from 'lucide'
 
-import { cx } from './cx'
-import { h } from './h'
-import { metadataFacet, parseOptional } from './metadataFacet'
-import { inRanges, isNumberedPageHeading } from './parse'
-import { StripdownConfig } from './StripdownConfig'
-import { stripdownTree } from './stripdownTree'
+import { cx } from '../core/cx'
+import { h } from '../core/h'
+import { metadataFacet, parseOptional } from '../core/metadataFacet'
+import { inRanges, isNumberedPageHeading } from '../core/parse'
+import { StripdownConfig } from '../core/StripdownConfig'
+import { stripdownTree } from '../core/stripdownTree'
 
 type PageSideOptions = {
   pageNumber: number

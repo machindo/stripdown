@@ -9,13 +9,13 @@ import {
 } from '@codemirror/view'
 import { match } from 'arktype'
 
-import { h } from './h'
+import { h } from '../core/h'
 import {
   inRanges,
   isNumberedPageHeading,
   isNumberedPanelHeading,
-} from './parse'
-import { stripdownTree } from './stripdownTree'
+} from '../core/parse'
+import { stripdownTree } from '../core/stripdownTree'
 
 type PanelCountWidgetOptions = {
   panelCount: number

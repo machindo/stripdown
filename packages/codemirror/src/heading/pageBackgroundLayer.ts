@@ -1,7 +1,7 @@
 import { type EditorView, layer, RectangleMarker } from '@codemirror/view'
 
-import { inRanges, isPageHeading, type StripdownTree } from './parse'
-import { stripdownTree } from './stripdownTree'
+import { inRanges, isPageHeading, type StripdownTree } from '../core/parse'
+import { stripdownTree } from '../core/stripdownTree'
 
 const pageGutter = 8
 

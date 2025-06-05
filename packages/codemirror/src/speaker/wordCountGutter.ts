@@ -11,9 +11,9 @@ import {
   ViewPlugin,
 } from '@codemirror/view'
 
-import { h } from './h'
-import { getWordCount, inRanges } from './parse'
-import { stripdownTree } from './stripdownTree'
+import { h } from '../core/h'
+import { getWordCount, inRanges } from '../core/parse'
+import { stripdownTree } from '../core/stripdownTree'
 
 type WordCountGutterMarkerOptions = {
   wordCount: number

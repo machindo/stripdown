@@ -7,7 +7,7 @@ export const stripdownTags = {
   speaker: Tag.define('Speaker'),
 }
 
-export const stripdownHighlightStyle = HighlightStyle.define([
+export const highlightStyle = HighlightStyle.define([
   {
     tag: stripdownTags.speaker,
     class: 'cm-stripdown-speaker',

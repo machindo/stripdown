@@ -1,9 +1,9 @@
 import { type EditorState, Facet } from '@codemirror/state'
 import { type } from 'arktype'
 
-import { metadataFacet } from './metadataFacet'
-import { isSpeaker, parseStripdownTree } from './parse'
-import { StripdownConfig } from './StripdownConfig'
+import { metadataFacet } from '../core/metadataFacet'
+import { isSpeaker, parseStripdownTree } from '../core/parse'
+import { StripdownConfig } from '../core/StripdownConfig'
 
 export const characterListFacet = Facet.define<string[], string[]>({
   combine: (lists) => [...new Set(lists.flat()).values()],

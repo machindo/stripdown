@@ -1,9 +1,9 @@
 import { foldService } from '@codemirror/language'
 
-import { headingLevelProp } from './markdownConfig'
-import { parseStripdownTree } from './parse'
+import { headingLevelProp } from '../core/markdownConfig'
+import { parseStripdownTree } from '../core/parse'
 
-export const stripdownFoldService = foldService.of(
+export const headingFoldService = foldService.of(
   (state, lineStart, lineEnd) => {
     const tree = parseStripdownTree(state)
     const index = tree.children.findIndex(

@@ -3,7 +3,7 @@ import type {
   CompletionSource,
 } from '@codemirror/autocomplete'
 
-import { isSpeaker, parseStripdownTree } from './parse'
+import { isSpeaker, parseStripdownTree } from '../core/parse'
 
 const maxOptions = 5
 

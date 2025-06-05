@@ -9,7 +9,7 @@ import {
   isNumberedPanelHeading,
   isPageHeading,
   parseStripdownTree,
-} from './parse'
+} from '../core/parse'
 
 const pageHeadingOption = (context: CompletionContext): Completion => {
   const tree = parseStripdownTree(context.state)
