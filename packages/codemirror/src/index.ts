@@ -1,5 +1,6 @@
 export * from './characterAutocompletion'
 export * from './characterListFacet'
+export * from './headingAutocompletionEN_US'
 export * from './markdownConfig'
 export * from './metadataFacet'
 export * from './pageBackgroundLayer'

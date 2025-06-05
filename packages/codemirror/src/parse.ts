@@ -15,16 +15,17 @@ import {
   validateNumberedHeadingProps,
 } from './nodes'
 
+export type StripdownTopNode = {
+  type: 'Top'
+  node: SyntaxNode
+}
+
 type Context = {
   headingNodes: StripdownNode[]
   headingNumbers: number[]
   speaker: StripdownNode | undefined
-  top: { type: 'Top' }
+  top: StripdownTopNode
   wordCount: number
-}
-
-export type StripdownTopNode = {
-  type: 'Top'
 }
 
 export type StripdownHeadingNode = {
@@ -90,14 +91,6 @@ export const isNumberedPanelHeading = (
 
 export const isSpeaker = (node: StripdownNode): node is StripdownSpeakerNode =>
   node.type === 'Speaker'
-
-const createContext = (): Context => ({
-  headingNodes: [],
-  headingNumbers: [],
-  speaker: undefined,
-  top: { type: 'Top' },
-  wordCount: 0,
-})
 
 const wordCounts = new WeakMap<StripdownNode, number>()
 
@@ -216,7 +209,16 @@ export const parse = function* (
 ): Generator<StripdownNode, void, unknown> {
   const tree = syntaxTree(state)
   const cursor = tree.cursor()
-  let context = createContext()
+  let context: Context = {
+    headingNodes: [],
+    headingNumbers: [],
+    speaker: undefined,
+    top: {
+      type: 'Top',
+      node: tree.topNode,
+    },
+    wordCount: 0,
+  }
 
   yield context.top
 

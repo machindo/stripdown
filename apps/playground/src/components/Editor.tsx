@@ -22,6 +22,7 @@ import {
   charactersFromMetadata,
   charactersFromSpeakers,
   frontmatterAsStripdownConfig,
+  headingAutocompletionEN_US,
   pageBackgroundLayer,
   pageIconDecorations,
   pageSummaryDecorations,
@@ -45,7 +46,11 @@ export const Editor = styled((props: { className?: string }) => {
         autocompletion({
           icons: false,
           maxRenderedOptions: 10,
-          override: [characterAutocompletion, speakerAutocompletion],
+          override: [
+            characterAutocompletion,
+            headingAutocompletionEN_US,
+            speakerAutocompletion,
+          ],
         }),
         // Presentation
         highlightSpecialChars(),

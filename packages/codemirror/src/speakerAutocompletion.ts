@@ -8,7 +8,6 @@ import { isSpeaker, parseStripdownTree } from './parse'
 const maxOptions = 5
 
 const findPreviousSpeakers = (context: CompletionContext, skip: number) => {
-  console.time('findPreviousSpeakers')
   const tree = parseStripdownTree(context.state)
 
   const speakers = tree.children
@@ -18,8 +17,6 @@ const findPreviousSpeakers = (context: CompletionContext, skip: number) => {
     .toReversed()
 
   const uniqueSpeakers = [...new Set(speakers)].slice(skip, skip + maxOptions)
-
-  console.timeEnd('findPreviousSpeakers')
 
   return uniqueSpeakers
 }
