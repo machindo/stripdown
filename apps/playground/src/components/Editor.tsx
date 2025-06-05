@@ -17,10 +17,15 @@ import {
   scrollPastEnd,
 } from '@codemirror/view'
 import {
+  characterAutocompletion,
+  characterListFacet,
+  charactersFromMetadata,
+  charactersFromSpeakers,
   frontmatterAsStripdownConfig,
   pageBackgroundLayer,
   pageIconDecorations,
   pageSummaryDecorations,
+  speakerAutocompletion,
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
@@ -37,7 +42,11 @@ export const Editor = styled((props: { className?: string }) => {
         // Editing
         history(),
         EditorState.allowMultipleSelections.of(true),
-        autocompletion(),
+        autocompletion({
+          icons: false,
+          maxRenderedOptions: 10,
+          override: [characterAutocompletion, speakerAutocompletion],
+        }),
         // Presentation
         highlightSpecialChars(),
         drawSelection(),
@@ -50,6 +59,8 @@ export const Editor = styled((props: { className?: string }) => {
         pageSummaryDecorations,
         wordCountGutter(),
         // Input handling
+        characterListFacet.compute(['doc'], charactersFromMetadata),
+        characterListFacet.compute(['doc'], charactersFromSpeakers),
         dropCursor(),
         keymap.of([
           ...defaultKeymap,

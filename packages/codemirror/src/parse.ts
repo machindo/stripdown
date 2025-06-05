@@ -88,6 +88,9 @@ export const isNumberedPanelHeading = (
   node.node.type.prop(headingLevelProp) === 3 &&
   node.props.isNumbered
 
+export const isSpeaker = (node: StripdownNode): node is StripdownSpeakerNode =>
+  node.type === 'Speaker'
+
 const createContext = (): Context => ({
   headingNodes: [],
   headingNumbers: [],
