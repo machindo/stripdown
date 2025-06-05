@@ -29,6 +29,7 @@ import { baseTheme } from './baseTheme'
 export const Editor = styled((props: { className?: string }) => {
   const editorView = new EditorView({
     state: EditorState.create({
+      doc: localStorage.getItem('doc') ?? '',
       extensions: [
         // Editing
         history(),
@@ -53,6 +54,11 @@ export const Editor = styled((props: { className?: string }) => {
           ...completionKeymap,
           ...lintKeymap,
         ]),
+        EditorView.updateListener.of((update) => {
+          if (!update.docChanged) return
+
+          localStorage.setItem('doc', update.view.state.doc.toString())
+        }),
         // Language
         stripdownTree,
         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),

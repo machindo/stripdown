@@ -244,6 +244,6 @@ export const inRanges = (
     (node) =>
       node.type !== 'Top' &&
       ranges.some(
-        (range) => range.from <= node.node.from && range.to >= node.node.to,
+        (range) => range.from <= node.node.to && range.to >= node.node.from,
       ),
   )

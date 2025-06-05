@@ -14,7 +14,7 @@ const buildMarkers = (view: EditorView, tree: StripdownTree) => {
     .map((pos) => view.coordsAtPos(pos))
     .filter(Boolean)
   const topOffset = view.documentPadding.top - view.documentTop
-  const bottom = (view.coordsAtPos(view.state.doc.length)?.bottom ?? 0) + 32
+  const bottom = (view.coordsAtPos(view.viewport.to)?.bottom ?? 0) + 32
 
   return [
     new RectangleMarker(
