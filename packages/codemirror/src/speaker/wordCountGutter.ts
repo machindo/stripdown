@@ -76,6 +76,7 @@ export const wordCountGutter = (): Extension => {
     markers,
     gutter({
       class: 'cm-wordCountGutter',
+      initialSpacer: () => new WordCountGutterMarker({ wordCount: 9000 }),
       markers: (view) => view.plugin(markers)?.markers ?? [],
     }),
   ]

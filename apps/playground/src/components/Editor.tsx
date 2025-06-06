@@ -40,8 +40,8 @@ import { styled } from 'styled-system/jsx'
 
 import { baseTheme } from './baseTheme'
 
-export const Editor = styled((props: { className?: string }) => {
-  const editorView = new EditorView({
+const createEditorView = () =>
+  new EditorView({
     state: EditorState.create({
       doc: localStorage.getItem('doc') ?? '',
       extensions: [
@@ -98,6 +98,9 @@ export const Editor = styled((props: { className?: string }) => {
       ],
     }),
   })
+
+export const Editor = styled((props: { className?: string }) => {
+  const editorView = createEditorView()
 
   return <div {...props}>{editorView.dom}</div>
 })
