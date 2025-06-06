@@ -254,7 +254,7 @@ export const parseStripdownTree = (state: EditorState): StripdownTree => {
 
   if (cachedTree) return cachedTree
 
-  const children = parse(state).toArray()
+  const children = [...parse(state)]
   const tree = { children }
 
   treeCache.set(state, tree)
