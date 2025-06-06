@@ -89,6 +89,13 @@ export const isNumberedPanelHeading = (
   node.node.type.prop(headingLevelProp) === 3 &&
   node.props.isNumbered
 
+export const isFixableHeading = (
+  node: StripdownNode,
+): node is StripdownHeadingNode & {
+  props: { isNumbered: true }
+  expectedProps: ExpectedNumberedHeadingProps
+} => node.type === 'Heading' && node.props.isNumbered && !!node.expectedProps
+
 export const isSpeaker = (node: StripdownNode): node is StripdownSpeakerNode =>
   node.type === 'Speaker'
 

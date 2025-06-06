@@ -23,6 +23,7 @@ import {
   charactersFromMetadata,
   charactersFromSpeakers,
   frontmatterAsStripdownConfig,
+  headingAutoCorrect,
   headingAutocompletionEN_US,
   headingFoldService,
   headingLinter,
@@ -72,6 +73,7 @@ export const Editor = styled((props: { className?: string }) => {
         characterListFacet.compute(['doc'], charactersFromMetadata),
         characterListFacet.compute(['doc'], charactersFromSpeakers),
         dropCursor(),
+        headingAutoCorrect,
         keymap.of([
           ...defaultKeymap,
           ...searchKeymap,
