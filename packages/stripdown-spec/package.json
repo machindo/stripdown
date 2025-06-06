@@ -1,0 +1,6 @@
+{
+  "name": "@stripdown/spec",
+  "module": "spec.md",
+  "type": "module",
+  "private": true
+}
