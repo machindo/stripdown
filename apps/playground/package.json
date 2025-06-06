@@ -17,13 +17,16 @@
     "@codemirror/search": "^6.5.11",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.8",
+    "@tanstack/solid-router": "^1.120.15",
+    "@tanstack/solid-router-devtools": "^1.120.15",
     "solid-js": "^1.9.5"
   },
   "devDependencies": {
-    "@stripdown/codemirror": "workspace:*",
     "@ark-ui/solid": "^5.11.0",
     "@pandacss/dev": "^0.53.7",
     "@park-ui/panda-preset": "^0.43.1",
+    "@stripdown/codemirror": "workspace:*",
+    "@tanstack/router-plugin": "^1.120.16",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-solid": "^2.11.6",
