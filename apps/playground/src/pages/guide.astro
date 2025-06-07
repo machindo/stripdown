@@ -1,0 +1,49 @@
+---
+import { css } from "../../styled-system/css";
+import Layout from "../layouts/layout.astro";
+import { Content } from "@stripdown/spec/spec.md";
+
+const style = css({
+  p: 2,
+  "& h1": {
+    fontSize: "2xl",
+    fontWeight: "semibold",
+  },
+  "& h2": {
+    fontSize: "xl",
+    fontWeight: "semibold",
+    mt: 3,
+  },
+  "& h3": {
+    fontSize: "lg",
+    fontWeight: "semibold",
+    mt: 3,
+  },
+  "& h4": {
+    fontWeight: "semibold",
+    mt: 3,
+  },
+  "& p": {
+    my: 2,
+  },
+  "& pre": {
+    p: 3,
+    border: "1px solid",
+    borderColor: "gray.7",
+  },
+  "& ul": {
+    listStyleType: "disc",
+    paddingInlineStart: 6,
+  },
+  "& ol": {
+    listStyleType: "decimal",
+    paddingInlineStart: 6,
+  },
+});
+---
+
+<Layout>
+  <div class={style}>
+    <Content />
+  </div>
+</Layout>

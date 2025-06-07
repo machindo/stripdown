@@ -1,0 +1,17 @@
+---
+import { Flex } from "../../styled-system/jsx";
+import AppHeader from "../components/AppHeader.astro";
+import "../index.css";
+---
+
+<html lang="en">
+  <head>
+    <title>Stripdown</title>
+  </head>
+  <body>
+    <Flex flexDir="column" h="100dvh" w="full">
+      <AppHeader />
+      <slot />
+    </Flex>
+  </body>
+</html>

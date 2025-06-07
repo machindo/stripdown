@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["*", "**", "!**/{cache,styled-system}/**/*"]
+    "includes": ["*", "**", "!**/{cache,styled-system}/**/*", "!**/*.astro"]
   },
   "formatter": {
     "enabled": true,
