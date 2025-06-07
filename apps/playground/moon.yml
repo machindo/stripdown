@@ -1,0 +1,10 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+tasks:
+  build:
+    command: bunx astro build
+    inputs:
+      - "src/**/*"
+      - "astro.config.ts"
+    outputs:
+      - "dist"
