@@ -1,5 +1,5 @@
 import { EditorView } from '@codemirror/view'
-import { token } from '../../styled-system/tokens'
+import { token } from 'styled-system/tokens'
 
 export const baseTheme = EditorView.theme({
   '&': {

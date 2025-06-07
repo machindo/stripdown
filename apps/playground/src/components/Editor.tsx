@@ -36,7 +36,7 @@ import {
   stripdownTree,
   wordCountGutter,
 } from '@stripdown/codemirror'
-import { styled } from '../../styled-system/jsx'
+import { styled } from 'styled-system/jsx'
 
 import { baseTheme } from './baseTheme'
 
