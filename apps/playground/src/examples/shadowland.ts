@@ -5,7 +5,6 @@ Author: Antony Johnston
 Draft date:
   Draft 1 - 2010-03-20
   Draft 2 - 2010-03-26
-Contact: antony@antonyjohnston.com
 Copyright: (c) Marvel Comics. All rights reserved.
 ---
 
@@ -361,7 +360,7 @@ _Aah! Jesus!_
 
 ### Panel 3
 
-Misty recovers and turns to face Shroud, annoyed at him for startling her. 
+Misty recovers and turns to face Shroud, annoyed at him for startling her.
 
 Shroud remains crouched in the window, with wisps of darkness coiling around him.
 
@@ -452,14 +451,14 @@ THUG1
 You _real_ far from where you need to be, lady.
 
 THUG3
-And that's _valuable information_. Maybe you 
+And that's _valuable information_. Maybe you
 _Pay_ us enough for our trouble, we show you the way home.
 
 ## PAGE 10
 
 ### Panel 1
 
-Sable doesn't waste time trying to talk these guys down. 
+Sable doesn't waste time trying to talk these guys down.
 
 She GRABS the arm of the nearest -- THUG1 -- and SLAMS the heel of her hand against his elbow, BREAKING it.
 
@@ -518,7 +517,7 @@ I hope he's right.
 
 CUT TO Misty, wearing a guest ID badge, entering the SQUAD ROOM. It's busy as all hell.
 
-Lt Scarfe sits at his desk, one of four in a square -- Dwyer sits opposite. 
+Lt Scarfe sits at his desk, one of four in a square -- Dwyer sits opposite.
 
 Scarfe looks up, sees Misty and waves in greeting.
 
@@ -599,7 +598,7 @@ But Scarfe isn't in the mood for jokes. He explains to Misty how bad things have
 LT SCARFE:
 I'm not joking here, Dwyer.
 (cont)
-There's been over _two hundred_ missing persons since last month. Citywide, we're dropping five homicides 
+There's been over _two hundred_ missing persons since last month. Citywide, we're dropping five homicides
 _Per day_.
 (cont)
 And, yeah, Fortunato was number -- eight? I can't even keep count -- on the Hand's little crusade.
@@ -630,7 +629,7 @@ Point being, _yeah_. Even besides Bullseye, this has been going on for weeks.
 Scarfe starts eating his burger. Misty still doesn't know what to make of all this.
 
 LT SCARFE:
-We got no prints, no DNA, no witnesses. These are 
+We got no prints, no DNA, no witnesses. These are
 _Pro hits_, with the Hand signature all over them.
 
 MISTY KNIGHT:
@@ -711,7 +710,7 @@ Danny, this isn't grade school. Just call her, it's fine.
 
 ### Panel 5
 
-REAR SHOT of Misty walking back out and down the steps, onto the street. 
+REAR SHOT of Misty walking back out and down the steps, onto the street.
 
 MISTY KNIGHT:
 Now listen, I've been thinking about names for a girl...
@@ -740,7 +739,7 @@ Sable approaches the club. A sign proclaims it to be the EASTERN PROMISE PRIVATE
 
 CAPTION:
 (SABLE)
-I hope I'm not too late. Tyler said the 
+I hope I'm not too late. Tyler said the
 _Police_ are looking for Bulovic, too. If they get to him before me, they'll never extradite.
 
 ### Panel 3
@@ -837,7 +836,7 @@ _Mr Bulovic?_ I bring message...
 
 -- And bursts in, throwing the door open, gun raised.
 
-BULOVIC, a burly, shaven-headed and tattooed Polish gangster, sits in a chair behind his desk... But Sable is too late. 
+BULOVIC, a burly, shaven-headed and tattooed Polish gangster, sits in a chair behind his desk... But Sable is too late.
 
 Bulovic is DEAD, and his wounds are all too familiar to us -- a deep stab wound in his chest, his throat slit, and a bloody handprint on his face.
 
@@ -907,9 +906,9 @@ What the--
 
 ### Panel 1
 
-LARGE PANEL. 
+LARGE PANEL.
 
-Sable's POV, looking North, towards Hell's Kitchen -- just as an EXPLOSION rips a hole in the side of Shadowland! 
+Sable's POV, looking North, towards Hell's Kitchen -- just as an EXPLOSION rips a hole in the side of Shadowland!
 
 (See Shadowland #3 for ref -- it's the Punisher making his entrance into the fortress.)
 
@@ -963,7 +962,7 @@ Shroud lands on a roof, beside the parapet -- an ideal place to watch the block 
 
 CAPTION:
 (SHROUD)
-My _senses_ are better than my real eyes ever were. 
+My _senses_ are better than my real eyes ever were.
 
 ### Panel 3
 
@@ -1032,7 +1031,7 @@ NO DIALOGUE
 
 ### Panel 5
 
-The mystery man lands. LOW VIEW, with just his boots and hand in panel, as he bends his legs and puts one hand down to steady his landing. 
+The mystery man lands. LOW VIEW, with just his boots and hand in panel, as he bends his legs and puts one hand down to steady his landing.
 
 In background, through the silhouette's military-style boots, we see Shroud lying on the floor, clutching his chest.
 
@@ -1045,12 +1044,12 @@ Who... are you...?
 
 SPLASH PAGE!
 
-LOW VIEW. Shroud lies on the floor, helpless. 
+LOW VIEW. Shroud lies on the floor, helpless.
 
 Standing over him, with the rifle slung over his back and a large PISTOL now pointed at Shroud, is... PALADIN.
 
 PALADIN:
-The name's 
+The name's
 _Paladin_.
 (cont)
 You got any last words?

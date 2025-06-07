@@ -24,12 +24,13 @@ export const headingAutoCorrect = EditorState.transactionFilter.of((tr) => {
     }
   })
   const changeSet = ChangeSet.of(changes, tr.newDoc.length)
-  const newTr = {
-    changes: tr.changes.compose(changeSet),
-    effects: StateEffect.mapEffects(tr.effects, changeSet),
-    selection: tr.selection?.map(changeSet),
-    scrollIntoView: tr.scrollIntoView,
-  }
 
-  return newTr
+  return changes.length > 0
+    ? {
+        changes: tr.changes.compose(changeSet),
+        effects: StateEffect.mapEffects(tr.effects, changeSet),
+        selection: tr.selection?.map(changeSet),
+        scrollIntoView: tr.scrollIntoView,
+      }
+    : tr
 })
