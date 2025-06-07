@@ -24,6 +24,7 @@ jobs:
         uses: withastro/action@v3
         with:
           path: ./apps/playground
+          package-manager: bun
   deploy:
     needs: build
     runs-on: ubuntu-latest
