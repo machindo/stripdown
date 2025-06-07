@@ -38,12 +38,13 @@ import {
 } from '@stripdown/codemirror'
 import { styled } from 'styled-system/jsx'
 
+import { doc } from '@/examples/shadowland.ts'
 import { baseTheme } from './baseTheme'
 
-const createEditorView = () =>
-  new EditorView({
+const createEditorView = () => {
+  const editorView = new EditorView({
     state: EditorState.create({
-      doc: localStorage.getItem('doc') ?? '',
+      doc: localStorage.getItem('doc') ?? doc,
       extensions: [
         // Editing
         history(),
@@ -81,6 +82,20 @@ const createEditorView = () =>
           ...foldKeymap,
           ...completionKeymap,
           ...lintKeymap,
+          {
+            key: 'Meta-Shift-s',
+            run: () => {
+              editorView.dispatch({
+                changes: {
+                  from: 0,
+                  to: editorView.state.doc.length,
+                  insert: doc,
+                },
+              })
+
+              return true
+            },
+          },
         ]),
         EditorView.updateListener.of((update) => {
           if (!update.docChanged) return
@@ -98,6 +113,9 @@ const createEditorView = () =>
       ],
     }),
   })
+
+  return editorView
+}
 
 export const Editor = styled((props: { className?: string }) => {
   const editorView = createEditorView()
