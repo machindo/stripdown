@@ -9,7 +9,7 @@ export const baseTheme = EditorView.theme({
     outline: 'none',
   },
   '.cm-scroller': {
-    padding: '1ch 0.5ch 1ch 1ch',
+    padding: '1ch 0.5ch 1ch 0',
     background: token('colors.gutter.bg'),
     fontFamily: token('fonts.mono'),
     scrollbarColor: `${token('colors.fg.subtle')} transparent`,
@@ -39,7 +39,7 @@ export const baseTheme = EditorView.theme({
     background: token('colors.gutter.bg'),
   },
   '.cm-gutterElement': {
-    paddingInline: '1ch',
+    paddingInline: token('spacing.2'),
   },
   '.cm-gutter:first-of-type .cm-activeLineGutter': {
     borderStartStartRadius: token('radii.md'),
@@ -82,6 +82,7 @@ export const baseTheme = EditorView.theme({
   '.cm-wordCountGutter-marker': {
     textAlign: 'right',
     verticalAlign: 'middle',
+    fontSize: token('fontSizes.xs'),
     color: token('colors.fg.subtle'),
   },
   // pageIconDecorations
