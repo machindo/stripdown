@@ -36,7 +36,8 @@ import {
   stripdownTree,
   wordCountGutter,
 } from '@stripdown/codemirror'
-import { styled } from 'styled-system/jsx'
+import { RotateCcw } from 'lucide-solid'
+import { Box, styled } from 'styled-system/jsx'
 
 import { doc } from '@/examples/shadowland.ts'
 import { baseTheme } from './baseTheme'
@@ -82,20 +83,6 @@ const createEditorView = () => {
           ...foldKeymap,
           ...completionKeymap,
           ...lintKeymap,
-          {
-            key: 'Meta-Shift-s',
-            run: () => {
-              editorView.dispatch({
-                changes: {
-                  from: 0,
-                  to: editorView.state.doc.length,
-                  insert: doc,
-                },
-              })
-
-              return true
-            },
-          },
         ]),
         EditorView.updateListener.of((update) => {
           if (!update.docChanged) return
@@ -119,6 +106,39 @@ const createEditorView = () => {
 
 export const Editor = styled((props: { className?: string }) => {
   const editorView = createEditorView()
+  const reset = () => {
+    editorView.dispatch({
+      changes: {
+        from: 0,
+        to: editorView.state.doc.length,
+        insert: doc,
+      },
+    })
+  }
 
-  return <div {...props}>{editorView.dom}</div>
+  return (
+    <Box pos="relative" {...props}>
+      <styled.button
+        _hover={{
+          bg: 'gray.1',
+        }}
+        aspectRatio={1}
+        bg="gray.2"
+        border="solid 1px"
+        borderColor="gray.7"
+        borderRadius={4}
+        left="1ex"
+        onClick={reset}
+        p={2}
+        pos="absolute"
+        title="Reset document"
+        top="1ex"
+        type="button"
+        zIndex={1}
+      >
+        <RotateCcw size={16} />
+      </styled.button>
+      {editorView.dom}
+    </Box>
+  )
 })

@@ -33,6 +33,7 @@
         "@park-ui/panda-preset": "^0.43.1",
         "@stripdown/codemirror": "workspace:*",
         "@stripdown/spec": "workspace:*",
+        "lucide-solid": "^0.513.0",
         "typescript": "~5.8.3",
         "vite": "^6.3.5",
         "vite-plugin-markdown": "^2.2.0",
@@ -929,6 +930,8 @@
     "lru-cache": ["lru-cache@10.4.3", "", {}, "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="],
 
     "lucide": ["lucide@0.513.0", "", {}, "sha512-c7gYh8As4tFHFk7j6xtog+1aLyKw0uDjT1wTXILVlRmmcOuArOv98LeWT1bWJqs/jqHXgRFbsmKmOMhsSAC2cg=="],
+
+    "lucide-solid": ["lucide-solid@0.513.0", "", { "peerDependencies": { "solid-js": "^1.4.7" } }, "sha512-cCNQY7UhEGylMO+Zvk7JczVklp1IsEFodi0eH4Tj5fpx2AVEC8SODWdaBBsU0LzRPh5HtVRkUo6fnamKT6dsmw=="],
 
     "magic-string": ["magic-string@0.30.17", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0" } }, "sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA=="],
 
