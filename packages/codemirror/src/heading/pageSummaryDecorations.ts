@@ -44,9 +44,9 @@ const createPageIconDecorations = (view: EditorView) => {
 
   if (!tree) return builder.finish()
 
-  const pageHeadingNodes = inRanges(tree, view.visibleRanges).filter(
-    isNumberedPageHeading,
-  )
+  const pageHeadingNodes = inRanges(tree, view.visibleRanges)
+    .filter(isNumberedPageHeading)
+    .filter((child) => !child.parenthetical)
 
   const panelHeadingNodes = tree.children.filter(isNumberedPanelHeading)
 
@@ -59,7 +59,7 @@ const createPageIconDecorations = (view: EditorView) => {
       pageHeading.node.to,
       pageHeading.node.to,
       Decoration.widget({
-        side: -1,
+        side: 1,
         widget: new PageSummaryWidget({
           panelCount,
         }),

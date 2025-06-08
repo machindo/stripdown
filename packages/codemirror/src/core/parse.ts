@@ -28,11 +28,18 @@ type Context = {
   wordCount: number
 }
 
+type StripdownParentheticalNode = {
+  type: 'Parenthetical'
+  node: SyntaxNode
+  text: string
+}
+
 export type StripdownHeadingNode = {
   type: 'Heading'
   node: SyntaxNode
   scope: StripdownNode[]
   expectedProps: ExpectedNumberedHeadingProps | undefined
+  parenthetical: StripdownParentheticalNode | undefined
   props: HeadingProps
   text: string
 }
@@ -41,16 +48,17 @@ export type StripdownSpeakerNode = {
   type: 'Speaker'
   node: SyntaxNode
   scope: StripdownNode[]
-  text: string
+  parenthetical: StripdownParentheticalNode | undefined
   props: SpeakerProps
+  text: string
 }
 
 export type StripdownDialogueNode = {
   type: 'Dialogue'
   node: SyntaxNode
   scope: StripdownNode[]
-  text: string
   props: DialogueProps
+  text: string
 }
 
 export type StripdownNode =
@@ -101,6 +109,24 @@ export const isSpeaker = (node: StripdownNode): node is StripdownSpeakerNode =>
 
 const wordCounts = new WeakMap<StripdownNode, number>()
 
+const getAssociatedParenthetical = ({
+  state,
+  node,
+}: {
+  state: EditorState
+  node: SyntaxNode
+}): StripdownParentheticalNode | undefined => {
+  const { nextSibling } = node
+
+  return nextSibling?.name === nodeTypes.parenthetical.name
+    ? {
+        type: 'Parenthetical',
+        node: nextSibling,
+        text: state.sliceDoc(nextSibling.from, nextSibling.to),
+      }
+    : undefined
+}
+
 const createHeadingNode = ({
   state,
   node,
@@ -124,6 +150,7 @@ const createHeadingNode = ({
     node,
     scope,
     text,
+    parenthetical: getAssociatedParenthetical({ state, node }),
     props,
     expectedProps,
   } satisfies StripdownNode
@@ -162,6 +189,7 @@ const createSpeakerNode = ({
     node,
     scope: context.headingNodes,
     text,
+    parenthetical: getAssociatedParenthetical({ state, node }),
     props: parseSpeaker(text),
   } satisfies StripdownNode
 

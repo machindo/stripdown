@@ -71,6 +71,7 @@ export const baseTheme = EditorView.theme({
   },
   '.cm-stripdown-parenthetical': {
     fontStyle: 'italic',
+    color: token('colors.fg.subtle'),
   },
   // pageBackgroundLayer
   '.cm-page-background': {
