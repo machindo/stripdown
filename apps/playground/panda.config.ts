@@ -26,6 +26,21 @@ export default defineConfig({
         colors: {
           [blue.name]: blue.tokens,
         },
+        fonts: {
+          mono: {
+            value: [
+              '"Courier Prime"',
+              'ui-monospace',
+              'SFMono-Regular',
+              'Menlo',
+              'Monaco',
+              'Consolas',
+              '"Liberation Mono"',
+              '"Courier New"',
+              'monospace',
+            ].join(','),
+          },
+        },
       },
       semanticTokens: {
         colors: {

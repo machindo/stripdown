@@ -1,0 +1,9 @@
+@layer reset, base, tokens, recipes, utilities;
+
+@layer base {
+  .astro-code,
+  .astro-code span {
+    line-height: 1.2;
+    font-family: var(--fonts-mono);
+  }
+}

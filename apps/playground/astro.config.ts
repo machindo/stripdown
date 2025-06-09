@@ -5,4 +5,9 @@ export default defineConfig({
   integrations: [solidJs()],
   site: 'https://machindo.github.io',
   base: 'stripdown',
+  markdown: {
+    shikiConfig: {
+      theme: 'github-light',
+    },
+  },
 })
