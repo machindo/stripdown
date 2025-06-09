@@ -1,0 +1,15 @@
+{
+  "name": "@stripdown/obsidian-plugin",
+  "version": "0.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/view": "^6.36.8",
+    "@stripdown/codemirror": "workspace:*",
+    "@types/bun": "latest",
+    "obsidian": "latest",
+    "typescript": "^5.8.3"
+  }
+}
