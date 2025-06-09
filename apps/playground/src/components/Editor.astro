@@ -1,0 +1,22 @@
+---
+import { RotateCcw } from 'lucide-solid'
+import { Box } from 'styled-system/jsx'
+import { Button } from './Button'
+---
+
+<Box id="stripdown-editor" pos="relative" flex="1" h="100px">
+  <Button
+    aspectRatio={1}
+    data-onclick="reset"
+    left="1ex"
+    pos="absolute"
+    title="Reset document"
+    top="1ex"
+    type="button"
+    zIndex={1}
+  >
+    <RotateCcw size={16} />
+  </Button>
+</Box>
+
+<script src="./editor.ts" />

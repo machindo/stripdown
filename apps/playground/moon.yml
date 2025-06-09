@@ -8,3 +8,10 @@ tasks:
       - "astro.config.ts"
     outputs:
       - "dist"
+  dev:
+    command: bunx astro dev
+    inputs:
+      - "src/**/*"
+      - "astro.config.ts"
+    outputs:
+      - "dist"
