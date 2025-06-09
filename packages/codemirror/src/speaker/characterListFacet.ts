@@ -11,12 +11,14 @@ export const characterListFacet = Facet.define<string[], string[]>({
 
 export const charactersFromSpeakers = (state: EditorState) => {
   const tree = parseStripdownTree(state)
-
   const speakers = tree.children
     .filter(isSpeaker)
     .map((speaker) => speaker.props.name)
+  const uniqueSpeakers = new Map(
+    speakers.map((name) => [name.toLocaleLowerCase(), name]),
+  ).values()
 
-  return [...new Set<string>(speakers)]
+  return [...uniqueSpeakers]
 }
 
 export const charactersFromMetadata = (state: EditorState) => {
