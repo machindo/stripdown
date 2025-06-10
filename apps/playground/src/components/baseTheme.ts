@@ -36,14 +36,10 @@ export const baseTheme = EditorView.theme({
   },
   '.cm-gutters': {
     border: 'none',
-    background: token('colors.gutter.bg'),
+    background: 'none',
   },
   '.cm-gutterElement': {
     paddingInline: token('spacing.2'),
-  },
-  '.cm-gutter:first-of-type .cm-activeLineGutter': {
-    borderStartStartRadius: token('radii.md'),
-    borderEndStartRadius: token('radii.md'),
   },
   '.cm-content': {
     maxWidth: '80ch',

@@ -2,9 +2,12 @@ import { EditorView } from '@codemirror/view'
 
 const colorFgDefault = '#202020'
 const colorFgSubtle = '#666666'
-const colorBgDefault = '#fcfcfc'
+const colorBgDefault = '#fff'
 
 export const theme = EditorView.theme({
+  '.cm-line': {
+    paddingInline: '3rch !important',
+  },
   // stripdownHighlightStyle
   '.cm-stripdown-speaker': {
     fontWeight: 'bold',
