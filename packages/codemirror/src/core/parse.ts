@@ -1,8 +1,10 @@
+import { markdown } from '@codemirror/lang-markdown'
 import { syntaxTree } from '@codemirror/language'
 import type { EditorState } from '@codemirror/state'
 import type { SyntaxNode } from '@lezer/common'
 
-import { headingLevelProp } from './markdownConfig'
+import { headingLevels } from '../heading/headingLevels'
+import { markdownConfig } from './markdownConfig'
 import {
   type DialogueProps,
   type ExpectedNumberedHeadingProps,
@@ -26,12 +28,6 @@ type Context = {
   speaker: StripdownNode | undefined
   top: StripdownTopNode
   wordCount: number
-}
-
-type StripdownParentheticalNode = {
-  type: 'Parenthetical'
-  node: SyntaxNode
-  text: string
 }
 
 export type StripdownHeadingNode = {
@@ -61,15 +57,22 @@ export type StripdownDialogueNode = {
   text: string
 }
 
+export type StripdownParentheticalNode = {
+  type: 'Parenthetical'
+  node: SyntaxNode
+  text: string
+}
+
 export type StripdownNode =
   | StripdownTopNode
   | StripdownHeadingNode
   | StripdownSpeakerNode
   | StripdownDialogueNode
+  | StripdownParentheticalNode
 
-type StripdownNodeResult =
+type StripdownNodeResult<T = StripdownNode> =
   | {
-      value: StripdownNode
+      value: T
       context: Context
     }
   | undefined
@@ -78,23 +81,33 @@ export type StripdownTree = {
   children: StripdownNode[]
 }
 
+const parseSyntaxTree =
+  import.meta.env.PARSE_MODE === 'obsidian'
+    ? (
+        () => (state: EditorState) =>
+          markdown({
+            extensions: [markdownConfig],
+          }).language.parser.parse(state.doc.toString())
+      )()
+    : syntaxTree
+
 export const isPageHeading = (
   node: StripdownNode,
 ): node is StripdownHeadingNode =>
-  node.type === 'Heading' && node.node.type.prop(headingLevelProp) === 2
+  node.type === 'Heading' && headingLevels[node.node.name] === 2
 
 export const isNumberedPageHeading = (
   node: StripdownNode,
 ): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
   node.type === 'Heading' &&
-  node.node.type.prop(headingLevelProp) === 2 &&
+  headingLevels[node.node.name] === 2 &&
   node.props.isNumbered
 
 export const isNumberedPanelHeading = (
   node: StripdownNode,
 ): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
   node.type === 'Heading' &&
-  node.node.type.prop(headingLevelProp) === 3 &&
+  headingLevels[node.node.name] === 3 &&
   node.props.isNumbered
 
 export const isFixableHeading = (
@@ -109,24 +122,6 @@ export const isSpeaker = (node: StripdownNode): node is StripdownSpeakerNode =>
 
 const wordCounts = new WeakMap<StripdownNode, number>()
 
-const getAssociatedParenthetical = ({
-  state,
-  node,
-}: {
-  state: EditorState
-  node: SyntaxNode
-}): StripdownParentheticalNode | undefined => {
-  const { nextSibling } = node
-
-  return nextSibling?.name === nodeTypes.parenthetical.name
-    ? {
-        type: 'Parenthetical',
-        node: nextSibling,
-        text: state.sliceDoc(nextSibling.from, nextSibling.to),
-      }
-    : undefined
-}
-
 const createHeadingNode = ({
   state,
   node,
@@ -136,7 +131,7 @@ const createHeadingNode = ({
   node: SyntaxNode
   context: Context
 }): StripdownNodeResult => {
-  const level = node.type.prop(headingLevelProp)
+  const level = headingLevels[node.name]
 
   if (!level) return undefined
 
@@ -150,7 +145,14 @@ const createHeadingNode = ({
     node,
     scope,
     text,
-    parenthetical: getAssociatedParenthetical({ state, node }),
+    parenthetical:
+      (node.nextSibling &&
+        createParentheticalNode({
+          state,
+          node: node.nextSibling,
+          context,
+        })?.value) ??
+      undefined,
     props,
     expectedProps,
   } satisfies StripdownNode
@@ -189,7 +191,14 @@ const createSpeakerNode = ({
     node,
     scope: context.headingNodes,
     text,
-    parenthetical: getAssociatedParenthetical({ state, node }),
+    parenthetical:
+      (node.nextSibling &&
+        createParentheticalNode({
+          state,
+          node: node.nextSibling,
+          context,
+        })?.value) ??
+      undefined,
     props: parseSpeaker(text),
   } satisfies StripdownNode
 
@@ -239,10 +248,31 @@ const createDialogueNode = ({
   }
 }
 
+const createParentheticalNode = ({
+  state,
+  node,
+  context,
+}: {
+  state: EditorState
+  node: SyntaxNode
+  context: Context
+}): StripdownNodeResult<StripdownParentheticalNode> => {
+  if (node.name !== nodeTypes.parenthetical.name) return undefined
+
+  return {
+    value: {
+      type: 'Parenthetical',
+      node,
+      text: state.sliceDoc(node.from, node.to),
+    },
+    context,
+  }
+}
+
 export const parse = function* (
   state: EditorState,
 ): Generator<StripdownNode, void, unknown> {
-  const tree = syntaxTree(state)
+  const tree = parseSyntaxTree(state)
   const cursor = tree.cursor()
   let context: Context = {
     headingNodes: [],
@@ -261,7 +291,8 @@ export const parse = function* (
     const result =
       createHeadingNode({ state, node: cursor.node, context }) ??
       createSpeakerNode({ state, node: cursor.node, context }) ??
-      createDialogueNode({ state, node: cursor.node, context })
+      createDialogueNode({ state, node: cursor.node, context }) ??
+      createParentheticalNode({ state, node: cursor.node, context })
 
     if (result) {
       context = result.context

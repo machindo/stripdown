@@ -1,4 +1,4 @@
-import { syntaxHighlighting } from '@codemirror/language'
+import type { Extension } from '@codemirror/state'
 import {
   characterAutocompletion,
   characterListFacet,
@@ -9,11 +9,11 @@ import {
   headingAutocompletionEN_US,
   headingFoldService,
   headingLinter,
-  highlightStyle,
   pageBackgroundLayer,
   pageIconDecorations,
   pageSummaryDecorations,
   speakerAutocompletion,
+  speakerDecorations,
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
@@ -21,7 +21,7 @@ import {
 
 import { theme } from './theme'
 
-export const codemirrorExtension = [
+export const codemirrorExtension: Extension[] = [
   // Editing
   stripdownLanguageSupport.language.data.of({
     autocomplete: [
@@ -35,6 +35,7 @@ export const codemirrorExtension = [
   pageBackgroundLayer(),
   pageIconDecorations,
   pageSummaryDecorations,
+  speakerDecorations,
   wordCountGutter(),
   // Input handling
   characterListFacet.compute(['doc'], charactersFromMetadata),
@@ -44,7 +45,5 @@ export const codemirrorExtension = [
   frontmatterAsStripdownConfig(),
   headingFoldService,
   headingLinter,
-  stripdownLanguageSupport,
   stripdownTree,
-  syntaxHighlighting(highlightStyle),
 ]

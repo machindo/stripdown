@@ -1,12 +1,13 @@
+import { Prec } from '@codemirror/state'
 import { Plugin } from 'obsidian'
 
 import { codemirrorExtension } from './codemirrorExtension'
 
 export default class StripdownPlugin extends Plugin {
-  async onload() {
-    this.registerEditorExtension(codemirrorExtension)
+  override async onload() {
+    this.registerEditorExtension(Prec.lowest(codemirrorExtension))
   }
-  async onunload() {
+  override async onunload() {
     // Release any resources configured by the plugin.
   }
 }
