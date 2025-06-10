@@ -52,8 +52,6 @@ const buildMarkers = (view: EditorView, tree: StripdownTree) => {
     })
     .filter(Boolean)
 
-  // console.log(markers)
-
   return markers
 }
 
