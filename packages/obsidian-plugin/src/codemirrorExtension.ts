@@ -1,4 +1,4 @@
-import type { Extension } from '@codemirror/state'
+import { Prec } from '@codemirror/state'
 import {
   characterAutocompletion,
   characterListFacet,
@@ -21,7 +21,7 @@ import {
 
 import { theme } from './theme'
 
-export const codemirrorExtension: Extension[] = [
+export const codemirrorExtension = Prec.lowest([
   // Editing
   stripdownLanguageSupport.language.data.of({
     autocomplete: [
@@ -46,4 +46,4 @@ export const codemirrorExtension: Extension[] = [
   headingFoldService,
   headingLinter,
   stripdownTree,
-]
+])
