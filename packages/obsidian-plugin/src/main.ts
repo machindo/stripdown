@@ -12,15 +12,9 @@ export default class StripdownPlugin extends Plugin {
 
     this.toggleEditorExtension()
 
-    this.app.workspace.on('active-leaf-change', () => {
-      this.toggleEditorExtension()
-    })
-    this.app.workspace.on('file-open', () => {
-      this.toggleEditorExtension()
-    })
-    this.app.metadataCache.on('changed', () => {
-      this.toggleEditorExtension()
-    })
+    this.app.workspace.on('active-leaf-change', this.toggleEditorExtension)
+    this.app.workspace.on('file-open', this.toggleEditorExtension)
+    this.app.metadataCache.on('changed', this.toggleEditorExtension)
   }
 
   private toggleEditorExtension = () => {
@@ -35,5 +29,11 @@ export default class StripdownPlugin extends Plugin {
       this.editorExtension.length = 0
       this.app.workspace.updateOptions()
     }
+  }
+
+  override onunload() {
+    this.app.workspace.off('active-leaf-change', this.toggleEditorExtension)
+    this.app.workspace.off('file-open', this.toggleEditorExtension)
+    this.app.metadataCache.off('changed', this.toggleEditorExtension)
   }
 }
