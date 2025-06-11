@@ -1,0 +1,16 @@
+{
+  "manifest_version": 1,
+  "id": "stripdown",
+  "app_min_version": "3.4",
+  "version": "1.0.0",
+  "name": "Stripdown",
+  "description": "Stripdown comic book script format plugin for Joplin",
+  "author": "Justin Paul Silva",
+  "homepage_url": "https://github.com/machindo/stripdown",
+  "repository_url": "https://github.com/machindo/stripdown",
+  "keywords": [],
+  "categories": [],
+  "screenshots": [],
+  "icons": {},
+  "promo_tile": {}
+}
