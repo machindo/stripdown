@@ -1,0 +1,11 @@
+{
+  "id": "stripdown",
+  "name": "Stripdown",
+  "version": "0.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Stripdown comic book script format plugin for Obsidian.",
+  "author": "Justin Paul Silva",
+  "authorUrl": "https://github.com/machindo",
+  "fundingUrl": "https://github.com/sponsors/machindo",
+  "isDesktopOnly": false
+}

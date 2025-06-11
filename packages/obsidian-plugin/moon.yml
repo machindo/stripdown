@@ -1,0 +1,23 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+tasks:
+  build:
+    description: "Build the plugin"
+    command: "tsdown; cp src/manifest.json dist/manifest.json"
+    inputs:
+      - src/**/*
+      - tsconfig.json
+      - tsdown.config.ts
+    outputs:
+      - dist
+  dev:
+    description: "Build the plugin"
+    deps:
+      - build
+    command: "tsdown --watch ./src --watch ../codemirror/src"
+    inputs:
+      - src/**/*
+      - tsconfig.json
+      - tsdown.config.ts
+    outputs:
+      - dist

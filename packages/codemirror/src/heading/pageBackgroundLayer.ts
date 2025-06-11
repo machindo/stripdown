@@ -1,45 +1,58 @@
-import { type EditorView, layer, RectangleMarker } from '@codemirror/view'
+import {
+  Direction,
+  type EditorView,
+  layer,
+  RectangleMarker,
+} from '@codemirror/view'
 
-import { inRanges, isPageHeading, type StripdownTree } from '../core/parse'
+import { isPageHeading, type StripdownTree } from '../core/parse'
 import { stripdownTree } from '../core/stripdownTree'
 
-const pageGutter = 8
+function getBase(view: EditorView) {
+  const rect = view.scrollDOM.getBoundingClientRect()
+  const left =
+    view.textDirection === Direction.LTR
+      ? rect.left
+      : rect.right - view.scrollDOM.clientWidth * view.scaleX
+  return {
+    left: left - view.scrollDOM.scrollLeft * view.scaleX,
+    top: rect.top - view.scrollDOM.scrollTop * view.scaleY,
+  }
+}
 
 const buildMarkers = (view: EditorView, tree: StripdownTree) => {
-  const parentDomRect = view.dom.getBoundingClientRect()
-  const domRect = view.contentDOM.getBoundingClientRect()
-  const headerCoords = inRanges(tree, view.visibleRanges)
+  const contentRect = view.contentDOM.getBoundingClientRect()
+  const base = getBase(view)
+  const headerPositions = tree.children
     .filter(isPageHeading)
     .map((node) => node.node.from)
-    .map((pos) => view.coordsAtPos(pos))
-    .filter(Boolean)
-  const topOffset = view.documentPadding.top - view.documentTop
-  const bottom = (view.coordsAtPos(view.viewport.to)?.bottom ?? 0) + 32
+    .filter((pos) => pos > view.viewport.from && pos < view.viewport.to)
+  const positions = [view.viewport.from, ...headerPositions, view.viewport.to]
+  const pageGap = 8
 
-  return [
-    new RectangleMarker(
-      'cm-page-background',
-      domRect.left - parentDomRect.left,
-      view.documentPadding.top,
-      domRect.width,
-      headerCoords[0]
-        ? headerCoords[0].top + topOffset - pageGutter
-        : bottom + pageGutter - view.documentTop,
-    ),
-    ...headerCoords.map((coords, i) => {
-      const nextCoords = headerCoords[i + 1]
+  const markers = positions
+    .map((pos, i) => {
+      const coords = view.coordsAtPos(pos)
+      const nextPos = positions[i + 1]
+
+      if (!coords || !nextPos) return undefined
+
+      const top = coords.top
+      const bottom = view.coordsAtPos(nextPos)?.top
+
+      if (!bottom) return undefined
 
       return new RectangleMarker(
         'cm-page-background',
-        domRect.left - parentDomRect.left,
-        coords.top + topOffset + pageGutter / 2,
-        domRect.width,
-        nextCoords
-          ? nextCoords.top - coords.top - pageGutter / 2
-          : bottom + pageGutter / 2 - coords.top,
+        contentRect.left - base.left,
+        top - base.top - pageGap / 2,
+        contentRect.width,
+        bottom - top - pageGap / 2,
       )
-    }),
-  ]
+    })
+    .filter(Boolean)
+
+  return markers
 }
 
 export const pageBackgroundLayer = () => {
