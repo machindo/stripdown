@@ -1,7 +1,7 @@
 import { foldService } from '@codemirror/language'
 
+import { headingLevelProp } from '../core/markdownConfig'
 import { parseStripdownTree } from '../core/parse'
-import { headingLevels } from './headingLevels'
 
 export const headingFoldService = foldService.of(
   (state, lineStart, lineEnd) => {
@@ -9,13 +9,12 @@ export const headingFoldService = foldService.of(
     const index = tree.children.findIndex(
       (child) => child.node.from === lineStart,
     )
-    const level =
-      tree.children[index] && headingLevels[tree.children[index].node.name]
+    const level = tree.children[index]?.node.type.prop(headingLevelProp)
 
     if (!level) return null
 
     const end = tree.children.slice(index + 1).find((child) => {
-      const childLevel = headingLevels[child.node.name]
+      const childLevel = child.node.type.prop(headingLevelProp)
 
       return childLevel && childLevel <= level
     })

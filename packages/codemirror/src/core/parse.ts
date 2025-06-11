@@ -3,8 +3,7 @@ import { syntaxTree } from '@codemirror/language'
 import type { EditorState } from '@codemirror/state'
 import type { SyntaxNode } from '@lezer/common'
 
-import { headingLevels } from '../heading/headingLevels'
-import { markdownConfig } from './markdownConfig'
+import { headingLevelProp, markdownConfig } from './markdownConfig'
 import {
   type DialogueProps,
   type ExpectedNumberedHeadingProps,
@@ -93,21 +92,20 @@ const parseSyntaxTree =
 
 export const isPageHeading = (
   node: StripdownNode,
-): node is StripdownHeadingNode =>
-  node.type === 'Heading' && headingLevels[node.node.name] === 2
+): node is StripdownHeadingNode => node.node.type.prop(headingLevelProp) === 2
 
 export const isNumberedPageHeading = (
   node: StripdownNode,
 ): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
   node.type === 'Heading' &&
-  headingLevels[node.node.name] === 2 &&
+  node.node.type.prop(headingLevelProp) === 2 &&
   node.props.isNumbered
 
 export const isNumberedPanelHeading = (
   node: StripdownNode,
 ): node is StripdownHeadingNode & { props: { isNumbered: true } } =>
   node.type === 'Heading' &&
-  headingLevels[node.node.name] === 3 &&
+  node.node.type.prop(headingLevelProp) === 3 &&
   node.props.isNumbered
 
 export const isFixableHeading = (
@@ -131,7 +129,7 @@ const createHeadingNode = ({
   node: SyntaxNode
   context: Context
 }): StripdownNodeResult => {
-  const level = headingLevels[node.name]
+  const level = node.node.type.prop(headingLevelProp)
 
   if (!level) return undefined
 

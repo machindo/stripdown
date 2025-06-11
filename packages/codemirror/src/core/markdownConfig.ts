@@ -1,3 +1,4 @@
+import { NodeProp } from '@lezer/common'
 import type {
   BlockContext,
   Element,
@@ -6,6 +7,8 @@ import type {
 } from '@lezer/markdown'
 
 import { nodeTypes, parentheticalPattern, speakerPattern } from './nodes'
+
+export const headingLevelProp = new NodeProp<number>()
 
 const parseParenthetical = (cx: BlockContext, line: Line) => {
   if (!parentheticalPattern.test(line.text)) return false
@@ -57,5 +60,17 @@ export const markdownConfig: MarkdownConfig = {
       name: 'Parenthetical',
       parse: parseParenthetical,
     },
+  ],
+  props: [
+    headingLevelProp.add({
+      ATXHeading1: 1,
+      ATXHeading2: 2,
+      ATXHeading3: 3,
+      ATXHeading4: 4,
+      ATXHeading5: 5,
+      ATXHeading6: 6,
+      SetextHeading1: 1,
+      SetextHeading2: 2,
+    }),
   ],
 } as const
