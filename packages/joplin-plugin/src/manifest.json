@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
-  "id": "stripdown",
-  "app_min_version": "3.4",
+  "id": "app.machindo.stripdown-plugin",
+  "app_min_version": "3.3",
   "version": "1.0.0",
   "name": "Stripdown",
   "description": "Stripdown comic book script format plugin for Joplin",

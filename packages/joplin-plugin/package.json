@@ -3,7 +3,10 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@joplin/lib": "^3.3.1",
     "@types/bun": "latest",
+    "tar": "^7.4.3",
+    "tsdown": "^0.12.7",
     "typescript": "^5.8.3"
   }
 }
