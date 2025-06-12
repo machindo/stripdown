@@ -3,9 +3,6 @@ import { defineConfig } from 'tsdown'
 export default defineConfig({
   copy: 'src/manifest.json',
   entry: 'src/main.ts',
-  env: {
-    PARSE_MODE: 'obsidian',
-  },
   external: [
     '@codemirror/language',
     '@codemirror/state',

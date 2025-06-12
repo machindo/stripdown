@@ -71,18 +71,23 @@ export default defineConfig({
   clean: [distDir, publishDir],
   copy: `${sourceDir}/manifest.json`,
   entry: [`${sourceDir}/index.ts`, `${sourceDir}/contentScript.ts`],
-  env: {
-    PARSE_MODE: 'obsidian',
-  },
   external: ['@codemirror/state', '@codemirror/view'],
   format: 'commonjs',
+  minify: true,
   outExtensions: () => ({
     js: '.js',
   }),
   hooks: {
     'build:done': async () => {
       await createPluginArchive()
+      console.info(
+        `${archivePath}\t${(file(archivePath).size / 1000).toFixed(2)} kB`,
+      )
+
       await createPluginInfo()
+      console.info(
+        `${publishDir}/manifest.json\t${(file(`${publishDir}/manifest.json`).size / 1000).toFixed(2)} kB`,
+      )
     },
   },
 })

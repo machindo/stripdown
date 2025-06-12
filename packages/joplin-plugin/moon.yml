@@ -5,6 +5,7 @@ tasks:
     description: "Build the plugin"
     command: "bunx --bun tsdown"
     inputs:
+      - /packages/codemirror/src/**/*
       - src/**/*
       - tsconfig.json
       - tsdown.config.ts
@@ -15,6 +16,7 @@ tasks:
     description: "Build the plugin"
     command: "bunx --bun tsdown --watch ./src --watch ../codemirror/src"
     inputs:
+      - /packages/codemirror/src/**/*
       - src/**/*
       - tsconfig.json
       - tsdown.config.ts
