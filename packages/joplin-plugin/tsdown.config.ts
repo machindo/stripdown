@@ -1,6 +1,5 @@
 import { createHash } from 'node:crypto'
 import { mkdir } from 'node:fs/promises'
-import path from 'node:path'
 import { $, file, Glob } from 'bun'
 
 import { create } from 'tar'
@@ -9,6 +8,7 @@ import { defineConfig } from 'tsdown'
 const sourceDir = 'src'
 const distDir = 'dist'
 const publishDir = 'publish'
+const archivePath = `${publishDir}/plugin.jpl`
 
 const glob = new Glob('**/*')
 
@@ -46,7 +46,7 @@ const createPluginArchive = async () => {
     {
       strict: true,
       portable: true,
-      file: `${publishDir}/plugin.jpl`,
+      file: archivePath,
       cwd: distDir,
     },
     distFiles,
@@ -55,7 +55,7 @@ const createPluginArchive = async () => {
 
 const createPluginInfo = async () => {
   const manifest = await file(`${distDir}/manifest.json`).json()
-  const hash = await fileSha256(`${publishDir}/plugin.jpl`)
+  const hash = await fileSha256(archivePath)
   const content = {
     ...manifest,
     _publish_hash: `sha256:${hash}`,
@@ -68,17 +68,14 @@ const createPluginInfo = async () => {
 }
 
 export default defineConfig({
-  alias: {
-    api: path.resolve(__dirname, 'api'),
-  },
   clean: [distDir, publishDir],
   copy: `${sourceDir}/manifest.json`,
-  entry: `${sourceDir}/index.ts`,
+  entry: [`${sourceDir}/index.ts`, `${sourceDir}/contentScript.ts`],
   env: {
     PARSE_MODE: 'obsidian',
   },
+  external: ['@codemirror/state', '@codemirror/view'],
   format: 'commonjs',
-  minify: true,
   outExtensions: () => ({
     js: '.js',
   }),

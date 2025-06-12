@@ -20,3 +20,4 @@ tasks:
       - tsdown.config.ts
     outputs:
       - dist
+      - publish
