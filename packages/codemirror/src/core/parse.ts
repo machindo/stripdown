@@ -3,6 +3,7 @@ import { syntaxTree } from '@codemirror/language'
 import type { EditorState } from '@codemirror/state'
 import type { SyntaxNode } from '@lezer/common'
 
+import { stripdownLanguageSupport } from '../stripdownLanguageSupport'
 import { headingLevelProp, markdownConfig } from './markdownConfig'
 import {
   type DialogueProps,
@@ -80,15 +81,12 @@ export type StripdownTree = {
   children: StripdownNode[]
 }
 
-const parseSyntaxTree =
-  import.meta.env.PARSE_MODE === 'obsidian'
-    ? (
-        () => (state: EditorState) =>
-          markdown({
-            extensions: [markdownConfig],
-          }).language.parser.parse(state.doc.toString())
-      )()
-    : syntaxTree
+const parseSyntaxTree = (state: EditorState) =>
+  stripdownLanguageSupport.language.isActiveAt(state, 0)
+    ? syntaxTree(state)
+    : markdown({
+        extensions: [markdownConfig],
+      }).language.parser.parse(state.doc.toString())
 
 export const isPageHeading = (
   node: StripdownNode,

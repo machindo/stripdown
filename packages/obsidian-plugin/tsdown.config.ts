@@ -1,11 +1,8 @@
-import { defineConfig } from 'tsdown/config'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  clean: false,
+  copy: 'src/manifest.json',
   entry: 'src/main.ts',
-  env: {
-    PARSE_MODE: 'obsidian',
-  },
   external: [
     '@codemirror/language',
     '@codemirror/state',
@@ -15,6 +12,7 @@ export default defineConfig({
     'obsidian',
   ],
   format: 'commonjs',
+  minify: true,
   outExtensions: () => ({
     js: '.js',
   }),

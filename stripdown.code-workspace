@@ -1,18 +1,27 @@
 {
 	"folders": [
 		{
+			"name": "stripdown",
 			"path": "."
 		},
 		{
+			"name": "playground",
 			"path": "apps/playground"
 		},
 		{
+			"name": "codemirror",
 			"path": "packages/codemirror"
 		},
 		{
+			"name": "joplin-plugin",
+			"path": "packages/joplin-plugin"
+		},
+		{
+			"name": "obsidian-plugin",
 			"path": "packages/obsidian-plugin"
 		},
 		{
+			"name": "stripdown-spec",
 			"path": "packages/stripdown-spec"
 		}
 	],
