@@ -2,7 +2,7 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   copy: 'src/manifest.json',
-  entry: 'src/main.ts',
+  entry: ['src/main.ts', 'src/styles.css'],
   external: [
     '@codemirror/language',
     '@codemirror/state',

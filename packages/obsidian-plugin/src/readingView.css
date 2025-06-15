@@ -1,0 +1,15 @@
+.reading-stripdown-page-heading {
+  page-break-before: always;
+}
+
+.reading-stripdown-speaker {
+  font-weight: bold;
+}
+
+.reading-stripdown-dialogue {
+  margin-inline: 4ch;
+}
+
+.reading-stripdown-parenthetical {
+  font-style: italic;
+}

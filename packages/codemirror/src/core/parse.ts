@@ -1,6 +1,6 @@
 import { markdown } from '@codemirror/lang-markdown'
 import { syntaxTree } from '@codemirror/language'
-import type { EditorState } from '@codemirror/state'
+import { EditorState } from '@codemirror/state'
 import type { SyntaxNode } from '@lezer/common'
 
 import { stripdownLanguageSupport } from '../stripdownLanguageSupport'
@@ -296,6 +296,19 @@ export const parse = function* (
       yield result.value
     }
   }
+}
+
+export const parseText = (doc: string) => {
+  const state = EditorState.create({
+    doc,
+    extensions: [
+      markdown({
+        extensions: [markdownConfig],
+      }),
+    ],
+  })
+
+  return parse(state)
 }
 
 export const getWordCount = (node: StripdownNode) => {

@@ -1,11 +1,22 @@
 import type { Extension } from '@codemirror/state'
-import { MarkdownView, Plugin } from 'obsidian'
+import { Plugin } from 'obsidian'
 
 import { codemirrorExtension } from './codemirrorExtension'
-import { isStripdownEnabled } from './isStripdownEnabled'
+import { markdownPostProcessor } from './markdownPostProcessor'
 
 export default class StripdownPlugin extends Plugin {
   private editorExtension: Extension[] = []
+
+  isEnabled() {
+    const file = this.app.workspace.activeEditor?.file
+
+    if (!file) return false
+
+    const tags: string[] | undefined =
+      this.app.metadataCache.getFileCache(file)?.frontmatter?.tags
+
+    return !!tags?.includes('stripdown')
+  }
 
   override async onload() {
     this.registerEditorExtension(this.editorExtension)
@@ -15,12 +26,12 @@ export default class StripdownPlugin extends Plugin {
     this.app.workspace.on('active-leaf-change', this.toggleEditorExtension)
     this.app.workspace.on('file-open', this.toggleEditorExtension)
     this.app.metadataCache.on('changed', this.toggleEditorExtension)
+
+    this.registerMarkdownPostProcessor(markdownPostProcessor(this))
   }
 
   private toggleEditorExtension = () => {
-    const file = this.app.workspace.getActiveViewOfType(MarkdownView)?.file
-
-    const enable = file && isStripdownEnabled({ app: this.app, file })
+    const enable = this.isEnabled()
 
     if (enable && this.editorExtension.length === 0) {
       this.editorExtension.push(codemirrorExtension)

@@ -2,7 +2,8 @@
 
 A Markdown superset for comic book scripts.
 
-**Caution:** This is a work in progress. The spec may change. The code may be buggy.
+> [!WARNING]
+> This is a work in progress. The spec may change. The code may be buggy.
 
 ## Contents
 
