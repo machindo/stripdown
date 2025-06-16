@@ -6,7 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["*", "**", "!**/{cache,styled-system}/**/*", "!**/*.astro"]
+    "includes": [
+      "*",
+      "**",
+      "!**/{cache,dist,publish,node_modules,styled-system}/**/*",
+      "!**/*.astro",
+      "!packages/joplin-plugin/api/**/*"
+    ]
   },
   "formatter": {
     "enabled": true,

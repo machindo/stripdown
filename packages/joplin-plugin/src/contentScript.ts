@@ -19,7 +19,7 @@ import {
   stripdownTree,
   wordCountGutter,
 } from '@stripdown/codemirror'
-import type { CodeMirrorControl } from 'api/types'
+import type { MarkdownEditorContentScriptModule } from 'api/types'
 
 import { theme } from './theme.js'
 
@@ -55,8 +55,8 @@ const codemirrorExtension = Prec.lowest([
 exports.default = (_context: {
   contentScriptId: string
   postMessage: unknown
-}) => ({
-  plugin: (codeMirrorWrapper: CodeMirrorControl) => {
-    codeMirrorWrapper.addExtension(codemirrorExtension)
+}): MarkdownEditorContentScriptModule => ({
+  plugin: (editorControl) => {
+    editorControl.addExtension(codemirrorExtension)
   },
 })

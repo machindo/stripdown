@@ -1,0 +1,16 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+tasks:
+  lint:
+    command: biome check
+    inputs:
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.json"
+      - "**/*.jsonc"
+      - "**/*.md"
+      - "**/*.mdx"
+      - "**/*.yml"
+      - "**/*.yaml"
