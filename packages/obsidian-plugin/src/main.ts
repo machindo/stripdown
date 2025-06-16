@@ -1,5 +1,5 @@
 import type { Extension } from '@codemirror/state'
-import { Plugin } from 'obsidian'
+import { MarkdownView, Plugin } from 'obsidian'
 
 import { codemirrorExtension } from './codemirrorExtension'
 import { markdownPostProcessor } from './markdownPostProcessor'
@@ -19,19 +19,25 @@ export default class StripdownPlugin extends Plugin {
   }
 
   override async onload() {
-    this.registerEditorExtension(this.editorExtension)
+    this.app.workspace.onLayoutReady(() => {
+      this.registerEditorExtension(this.editorExtension)
 
-    this.toggleEditorExtension()
+      this.toggleExtension()
 
-    this.app.workspace.on('active-leaf-change', this.toggleEditorExtension)
-    this.app.workspace.on('file-open', this.toggleEditorExtension)
-    this.app.metadataCache.on('changed', this.toggleEditorExtension)
+      this.app.workspace.on('active-leaf-change', this.toggleExtension)
+      this.app.workspace.on('file-open', this.toggleExtension)
+      this.app.metadataCache.on('changed', this.toggleExtension)
 
-    this.registerMarkdownPostProcessor(markdownPostProcessor(this))
+      this.registerMarkdownPostProcessor(markdownPostProcessor(this))
+    })
   }
 
-  private toggleEditorExtension = () => {
+  private toggleExtension = () => {
     const enable = this.isEnabled()
+
+    this.app.workspace
+      .getActiveViewOfType(MarkdownView)
+      ?.previewMode.rerender(true)
 
     if (enable && this.editorExtension.length === 0) {
       this.editorExtension.push(codemirrorExtension)
@@ -43,8 +49,8 @@ export default class StripdownPlugin extends Plugin {
   }
 
   override onunload() {
-    this.app.workspace.off('active-leaf-change', this.toggleEditorExtension)
-    this.app.workspace.off('file-open', this.toggleEditorExtension)
-    this.app.metadataCache.off('changed', this.toggleEditorExtension)
+    this.app.workspace.off('active-leaf-change', this.toggleExtension)
+    this.app.workspace.off('file-open', this.toggleExtension)
+    this.app.metadataCache.off('changed', this.toggleExtension)
   }
 }

@@ -23,6 +23,7 @@ export const markdownPostProcessor =
 
       if (nodes.length) {
         paragraph.empty()
+
         for (const node of nodes) {
           const div = paragraph.createDiv()
 
