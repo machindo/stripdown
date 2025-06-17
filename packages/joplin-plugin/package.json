@@ -8,6 +8,7 @@
     "@codemirror/view": "^6.36.8",
     "@joplin/lib": "^3.3.1",
     "@types/bun": "latest",
+    "arktype": "^2.1.20",
     "tar": "^7.4.3",
     "tsdown": "^0.12.7",
     "typescript": "^5.8.3"

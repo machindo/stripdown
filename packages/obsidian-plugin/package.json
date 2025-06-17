@@ -10,6 +10,7 @@
     "@lezer/markdown": "^1.4.3",
     "@stripdown/codemirror": "workspace:*",
     "@types/bun": "latest",
+    "arktype": "^2.1.20",
     "obsidian": "latest",
     "tsconfig-moon": "^1.4.0",
     "tsdown": "^0.12.7",

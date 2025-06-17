@@ -1,8 +1,12 @@
 import type { Extension } from '@codemirror/state'
+import { parseOptional } from '@stripdown/codemirror'
+import { type } from 'arktype'
 import { MarkdownView, Plugin } from 'obsidian'
 
 import { codemirrorExtension } from './codemirrorExtension'
 import { markdownPostProcessor } from './markdownPostProcessor'
+
+const Frontmatter = type({ 'tags?': 'string[]' })
 
 export default class StripdownPlugin extends Plugin {
   private editorExtension: Extension[] = []
@@ -12,10 +16,11 @@ export default class StripdownPlugin extends Plugin {
 
     if (!file) return false
 
-    const tags: string[] | undefined =
-      this.app.metadataCache.getFileCache(file)?.frontmatter?.tags
+    const metadata = parseOptional(Frontmatter)(
+      this.app.metadataCache.getFileCache(file)?.frontmatter,
+    )
 
-    return !!tags?.includes('stripdown')
+    return metadata?.tags?.includes('stripdown')
   }
 
   override async onload() {

@@ -6,14 +6,21 @@ import yaml from 'js-yaml'
 
 import { StripdownConfig } from './StripdownConfig'
 
+const frontmatterPattern = /^---\n(?<frontmatter>.+?)\n---\n/s
+
 export const metadataFacet = Facet.define<unknown, unknown>({
   combine: (values) => values[values.length - 1],
 })
 
 export const sliceFrontmatter = (state: EditorState) => {
-  const node = syntaxTree(state)
-    .topNode.getChild('Frontmatter')
-    ?.getChild('Stream')?.node
+  const topNode = syntaxTree(state).topNode
+
+  // Fallback to direct doc string parsing if state cannot be parsed, e.g. in a Joplin plugin when Stripdown is not enabled
+  if (!topNode.firstChild) {
+    return frontmatterPattern.exec(state.doc.toString())?.groups?.frontmatter
+  }
+
+  const node = topNode.getChild('Frontmatter')?.getChild('Stream')?.node
 
   return node && state.sliceDoc(node.from, node.to)
 }
@@ -30,7 +37,7 @@ export const parseOptional =
     return isSuccessResult(result) ? result.value : undefined
   }
 
-const frontmatterAs =
+export const frontmatterAs =
   <T>(schema: StandardSchemaV1<unknown, T>) =>
   (state: EditorState) => {
     const frontmatter = sliceFrontmatter(state)
