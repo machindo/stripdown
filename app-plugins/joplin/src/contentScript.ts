@@ -1,6 +1,9 @@
 import { syntaxHighlighting } from '@codemirror/language'
 import { Compartment, type EditorState, Facet, Prec } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
+import type { MarkdownEditorContentScriptModule } from 'api/types'
+import { type } from 'arktype'
+
 import {
   characterAutocompletion,
   characterListFacet,
@@ -20,10 +23,7 @@ import {
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
-} from '@stripdown/codemirror'
-import type { MarkdownEditorContentScriptModule } from 'api/types'
-import { type } from 'arktype'
-
+} from '../../../libs/codemirror/src/index.js'
 import { theme } from './theme.js'
 
 const compartment = new Compartment()

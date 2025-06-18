@@ -6,7 +6,8 @@ $schema: "./cache/schemas/workspace.json"
 projects:
   - "."
   - "apps/*"
-  - "packages/*"
+  - "app-plugins/*"
+  - "libs/*"
 
 vcs:
   manager: "git"

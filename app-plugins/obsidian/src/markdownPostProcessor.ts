@@ -1,6 +1,6 @@
-import { parseText } from '@stripdown/codemirror'
 import type { MarkdownPostProcessor } from 'obsidian'
 
+import { parseText } from '../../../libs/codemirror/src'
 import type StripdownPlugin from './main'
 
 export const markdownPostProcessor =

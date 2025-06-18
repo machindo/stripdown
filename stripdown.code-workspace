@@ -9,20 +9,20 @@
       "path": "apps/playground"
     },
     {
+      "name": "joplin",
+      "path": "app-plugins/joplin"
+    },
+    {
+      "name": "obsidian",
+      "path": "app-plugins/obsidian"
+    },
+    {
       "name": "codemirror",
-      "path": "packages/codemirror"
+      "path": "libs/codemirror"
     },
     {
-      "name": "joplin-plugin",
-      "path": "packages/joplin-plugin"
-    },
-    {
-      "name": "obsidian-plugin",
-      "path": "packages/obsidian-plugin"
-    },
-    {
-      "name": "stripdown-spec",
-      "path": "packages/stripdown-spec"
+      "name": "spec",
+      "path": "libs/spec"
     }
   ],
   "settings": {

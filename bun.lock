@@ -10,6 +10,37 @@
         "typescript": "~5.8.3",
       },
     },
+    "app-plugins/joplin": {
+      "name": "joplin-plugin",
+      "devDependencies": {
+        "@codemirror/language": "^6.11.0",
+        "@codemirror/state": "^6.5.2",
+        "@codemirror/view": "^6.36.8",
+        "@joplin/lib": "^3.3.1",
+        "@types/bun": "latest",
+        "arktype": "^2.1.20",
+        "tar": "^7.4.3",
+        "tsdown": "^0.12.7",
+        "typescript": "^5.8.3",
+      },
+    },
+    "app-plugins/obsidian": {
+      "name": "@stripdown/obsidian-plugin",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@codemirror/language": "^6.11.0",
+        "@codemirror/state": "^6.5.2",
+        "@codemirror/view": "^6.36.8",
+        "@lezer/markdown": "^1.4.3",
+        "@stripdown/codemirror": "workspace:*",
+        "@types/bun": "latest",
+        "arktype": "^2.1.20",
+        "obsidian": "latest",
+        "tsconfig-moon": "^1.4.0",
+        "tsdown": "^0.12.7",
+        "typescript": "^5.8.3",
+      },
+    },
     "apps/playground": {
       "name": "@stripdown/playground",
       "version": "0.0.0",
@@ -40,7 +71,7 @@
         "vite-tsconfig-paths": "^5.1.4",
       },
     },
-    "packages/codemirror": {
+    "lib/codemirror": {
       "name": "@stripdown/codemirror",
       "version": "0.0.0",
       "devDependencies": {
@@ -66,38 +97,7 @@
         "typescript": "~5.8.3",
       },
     },
-    "packages/joplin-plugin": {
-      "name": "joplin-plugin",
-      "devDependencies": {
-        "@codemirror/language": "^6.11.0",
-        "@codemirror/state": "^6.5.2",
-        "@codemirror/view": "^6.36.8",
-        "@joplin/lib": "^3.3.1",
-        "@types/bun": "latest",
-        "arktype": "^2.1.20",
-        "tar": "^7.4.3",
-        "tsdown": "^0.12.7",
-        "typescript": "^5.8.3",
-      },
-    },
-    "packages/obsidian-plugin": {
-      "name": "@stripdown/obsidian-plugin",
-      "version": "0.0.0",
-      "devDependencies": {
-        "@codemirror/language": "^6.11.0",
-        "@codemirror/state": "^6.5.2",
-        "@codemirror/view": "^6.36.8",
-        "@lezer/markdown": "^1.4.3",
-        "@stripdown/codemirror": "workspace:*",
-        "@types/bun": "latest",
-        "arktype": "^2.1.20",
-        "obsidian": "latest",
-        "tsconfig-moon": "^1.4.0",
-        "tsdown": "^0.12.7",
-        "typescript": "^5.8.3",
-      },
-    },
-    "packages/stripdown-spec": {
+    "lib/stripdown-spec": {
       "name": "@stripdown/spec",
     },
   },
@@ -730,13 +730,13 @@
 
     "@standard-schema/spec": ["@standard-schema/spec@1.0.0", "", {}, "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="],
 
-    "@stripdown/codemirror": ["@stripdown/codemirror@workspace:packages/codemirror"],
+    "@stripdown/codemirror": ["@stripdown/codemirror@workspace:lib/codemirror"],
 
-    "@stripdown/obsidian-plugin": ["@stripdown/obsidian-plugin@workspace:packages/obsidian-plugin"],
+    "@stripdown/obsidian-plugin": ["@stripdown/obsidian-plugin@workspace:app-plugins/obsidian"],
 
     "@stripdown/playground": ["@stripdown/playground@workspace:apps/playground"],
 
-    "@stripdown/spec": ["@stripdown/spec@workspace:packages/stripdown-spec"],
+    "@stripdown/spec": ["@stripdown/spec@workspace:lib/stripdown-spec"],
 
     "@swc/helpers": ["@swc/helpers@0.5.17", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A=="],
 
@@ -1512,7 +1512,7 @@
 
     "jiti": ["jiti@2.4.2", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A=="],
 
-    "joplin-plugin": ["joplin-plugin@workspace:packages/joplin-plugin"],
+    "joplin-plugin": ["joplin-plugin@workspace:app-plugins/joplin"],
 
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 

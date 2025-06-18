@@ -1,4 +1,5 @@
 import { Prec } from '@codemirror/state'
+
 import {
   characterAutocompletion,
   characterListFacet,
@@ -17,8 +18,7 @@ import {
   stripdownLanguageSupport,
   stripdownTree,
   wordCountGutter,
-} from '@stripdown/codemirror'
-
+} from '../../../libs/codemirror/src'
 import { theme } from './theme'
 
 export const codemirrorExtension = Prec.lowest([

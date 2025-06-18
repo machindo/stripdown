@@ -1,8 +1,8 @@
 import type { Extension } from '@codemirror/state'
-import { parseOptional } from '@stripdown/codemirror'
 import { type } from 'arktype'
 import { MarkdownView, Plugin } from 'obsidian'
 
+import { parseOptional } from '../../../libs/codemirror/src'
 import { codemirrorExtension } from './codemirrorExtension'
 import { markdownPostProcessor } from './markdownPostProcessor'
 
