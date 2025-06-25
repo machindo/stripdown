@@ -8,7 +8,7 @@ import {
 } from '@codemirror/language'
 import { lintKeymap } from '@codemirror/lint'
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search'
-import { EditorState } from '@codemirror/state'
+import { EditorState, type Extension } from '@codemirror/state'
 import {
   drawSelection,
   dropCursor,
@@ -37,17 +37,12 @@ import {
   wordCountGutter,
 } from '@stripdown/codemirror'
 
-import { doc } from '@/examples/shadowland.ts'
 import { baseTheme } from './baseTheme'
 
-const parent = document.getElementById('stripdown-editor')
-
-const editorView =
-  parent &&
+export const createEditorView = (doc: string, extension?: Extension) =>
   new EditorView({
-    parent,
     state: EditorState.create({
-      doc: localStorage.getItem('doc') ?? doc,
+      doc,
       extensions: [
         // Editing
         history(),
@@ -86,11 +81,6 @@ const editorView =
           ...completionKeymap,
           ...lintKeymap,
         ]),
-        EditorView.updateListener.of((update) => {
-          if (!update.docChanged) return
-
-          localStorage.setItem('doc', update.view.state.doc.toString())
-        }),
         // Language
         frontmatterAsStripdownConfig(),
         headingFoldService,
@@ -99,20 +89,8 @@ const editorView =
         stripdownTree,
         syntaxHighlighting(defaultHighlightStyle),
         syntaxHighlighting(highlightStyle),
+        // Optional
+        extension ?? [],
       ],
     }),
   })
-
-const reset = () => {
-  editorView?.dispatch({
-    changes: {
-      from: 0,
-      to: editorView.state.doc.length,
-      insert: doc,
-    },
-  })
-}
-
-document.querySelectorAll('[data-onclick="reset"]').forEach((button) => {
-  button.addEventListener('click', reset)
-})

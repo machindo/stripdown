@@ -1,8 +1,8 @@
 ---
 import Layout from "@layouts/layout.astro";
-import Editor from "@components/Editor.astro";
+import { TextEditor } from "@components/TextEditor";
 ---
 
 <Layout>
-  <Editor />
+  <TextEditor client:only="solid-js" />
 </Layout>

@@ -6,6 +6,7 @@ tasks:
   lint:
     command: biome check
     inputs:
+      - "biome.jsonc"
       - "**/*.ts"
       - "**/*.tsx"
       - "**/*.js"

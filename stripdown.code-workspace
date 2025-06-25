@@ -5,20 +5,24 @@
       "path": "."
     },
     {
-      "name": "playground",
-      "path": "apps/playground"
+      "name": "codemirror",
+      "path": "libs/codemirror"
     },
     {
       "name": "joplin",
       "path": "app-plugins/joplin"
     },
     {
+      "name": "markdown-it",
+      "path": "libs/markdown-it"
+    },
+    {
       "name": "obsidian",
       "path": "app-plugins/obsidian"
     },
     {
-      "name": "codemirror",
-      "path": "libs/codemirror"
+      "name": "playground",
+      "path": "apps/playground"
     },
     {
       "name": "spec",
@@ -26,6 +30,6 @@
     }
   ],
   "settings": {
-    "cSpell.words": ["Stripdown"]
+    "cSpell.words": ["arktype", "Stripdown"]
   }
 }

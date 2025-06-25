@@ -11,7 +11,7 @@
       "**",
       "!**/{cache,dist,publish,node_modules,styled-system}/**/*",
       "!**/*.astro",
-      "!packages/joplin-plugin/api/**/*"
+      "!app-plugins/joplin/api/**/*"
     ]
   },
   "formatter": {

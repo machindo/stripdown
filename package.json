@@ -9,10 +9,10 @@
   "workspaces": [
     "apps/*",
     "app-plugins/*",
-    "lib/*"
+    "libs/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "2.0.0-beta.6",
+    "@biomejs/biome": "~2.0.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/bun": "latest",
     "typescript": "~5.8.3"

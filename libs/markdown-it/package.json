@@ -1,0 +1,13 @@
+{
+  "name": "@stripdown/markdown-it",
+  "type": "module",
+  "main": "src/index.ts",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/markdown-it": "^14.1.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

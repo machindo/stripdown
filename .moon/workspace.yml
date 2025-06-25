@@ -12,3 +12,6 @@ projects:
 vcs:
   manager: "git"
   defaultBranch: "main"
+  hooks:
+    pre-commit:
+      - "moon run root:lint"
